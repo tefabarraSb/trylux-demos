@@ -103,6 +103,18 @@ button{font-family:inherit; font-size:inherit; cursor:pointer}
 }
 .aviso-rol b{font-weight:600}
 .sw[disabled]{opacity:.45; cursor:not-allowed}
+.solo-uno{
+  margin:0 0 4px; padding:12px 14px; border-radius:9px; font-size:15px; line-height:1.5;
+  background:var(--verde-soft); color:var(--verde);
+  border:1px solid color-mix(in srgb,var(--verde) 34%,transparent);
+}
+.solo-uno b{font-weight:600; letter-spacing:.01em}
+.solo-uno span{font-size:13px; color:var(--ink2)}
+.opcion{
+  flex:none; width:34px; height:24px; display:grid; place-items:center; margin-top:1px;
+  font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:600;
+  color:var(--ink3); background:var(--panel3); border-radius:6px;
+}
 
 .side{
   background:var(--panel); border-right:1px solid var(--line); padding:14px 10px;
@@ -535,13 +547,17 @@ td.num{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums;
 
       <div class="cols2">
         <div class="caja">
-          <header><h2>1 · Documentos que deben tener listos</h2><span class="der">basta con UNO de estos</span></header>
+          <header><h2>1 · Un solo documento</h2></header>
           <div class="cuerpo">
-            <div class="reglas" style="margin:-14px -14px 0">
-              <div class="regla"><div class="tx"><b>Ficha RUC de SUNAT</b><p>El documento de la empresa con su nombre legal y dirección.</p></div></div>
-              <div class="regla"><div class="tx"><b>Constitución o licencia de funcionamiento</b><p>El acta de constitución o la licencia municipal del concesionario.</p></div></div>
-              <div class="regla"><div class="tx"><b>Estado de cuenta bancario del negocio</b><p>De los últimos 12 meses, a nombre de la empresa.</p></div></div>
-              <div class="regla"><div class="tx"><b>Recibo de luz, agua o teléfono fijo</b><p>Del local, a nombre del concesionario y de menos de un año.</p></div></div>
+            <p class="solo-uno">
+              Con <b>UNO CUALQUIERA</b> de estos cuatro es suficiente.<br>
+              <span>No hay que reunirlos todos: se manda el que tengan más a la mano.</span>
+            </p>
+            <div class="reglas" style="margin:0 -14px">
+              <div class="regla"><span class="opcion">A</span><div class="tx"><b>Ficha RUC de SUNAT</b><p>El documento de la empresa con su nombre legal y dirección.</p></div></div>
+              <div class="regla"><span class="opcion">o&nbsp;B</span><div class="tx"><b>Constitución o licencia de funcionamiento</b><p>El acta de constitución o la licencia municipal del concesionario.</p></div></div>
+              <div class="regla"><span class="opcion">o&nbsp;C</span><div class="tx"><b>Estado de cuenta bancario del negocio</b><p>De los últimos 12 meses, a nombre de la empresa.</p></div></div>
+              <div class="regla"><span class="opcion">o&nbsp;D</span><div class="tx"><b>Recibo de luz, agua o teléfono fijo</b><p>Del local, a nombre del concesionario y de menos de un año.</p></div></div>
             </div>
             <p class="nota" style="margin-top:14px">
               El documento debe mostrar <b>el nombre legal y la dirección</b> tal como están registrados, y tener <b>menos de un año</b>.
