@@ -1,0 +1,1146 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Centro de Ventas Crossland</title>
+<meta name="description" content="Centro de Ventas Crossland — demostración interactiva del CRM para Bajaj Iquitos y Pucallpa.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
+<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#EEF2F6; --panel:#FFFFFF; --panel2:#F6F9FB; --panel3:#EAF0F5;
+  --ink:#0D1B26; --ink2:#42596B; --ink3:#7B93A6;
+  --line:#D9E3EB; --line2:#C6D4DF;
+  --azul:#1466B8; --azul-ink:#0E4C8A; --azul-soft:#E2EEFA;
+  --ambar:#B87400; --ambar-soft:#FBEEDA;
+  --verde:#157A3C; --verde-soft:#DFF2E6;
+  --rojo:#BF2626; --rojo-soft:#FAE3E3;
+  --sombra:0 1px 2px rgba(13,27,38,.06), 0 6px 18px rgba(13,27,38,.05);
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#08121A; --panel:#0F1E29; --panel2:#152A38; --panel3:#1B3444;
+    --ink:#E9F1F6; --ink2:#A0B7C6; --ink3:#6F8898;
+    --line:#20394A; --line2:#2C4A5E;
+    --azul:#63ACF2; --azul-ink:#8FC6FA; --azul-soft:#10304C;
+    --ambar:#EFB54A; --ambar-soft:#37280C;
+    --verde:#57D68C; --verde-soft:#0F2E1D;
+    --rojo:#F2807E; --rojo-soft:#3A1618;
+    --sombra:0 1px 2px rgba(0,0,0,.4), 0 8px 22px rgba(0,0,0,.32);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#08121A; --panel:#0F1E29; --panel2:#152A38; --panel3:#1B3444;
+  --ink:#E9F1F6; --ink2:#A0B7C6; --ink3:#6F8898;
+  --line:#20394A; --line2:#2C4A5E;
+  --azul:#63ACF2; --azul-ink:#8FC6FA; --azul-soft:#10304C;
+  --ambar:#EFB54A; --ambar-soft:#37280C;
+  --verde:#57D68C; --verde-soft:#0F2E1D;
+  --rojo:#F2807E; --rojo-soft:#3A1618;
+  --sombra:0 1px 2px rgba(0,0,0,.4), 0 8px 22px rgba(0,0,0,.32);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  font-size:14px; line-height:1.5; -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.disp{font-family:"Barlow Condensed","Arial Narrow",sans-serif; font-weight:600; letter-spacing:.01em; margin:0; text-wrap:balance}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace; font-variant-numeric:tabular-nums}
+.eyebrow{font-size:10.5px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--ink3)}
+button{font-family:inherit; font-size:inherit; cursor:pointer}
+:focus-visible{outline:2px solid var(--azul); outline-offset:2px; border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* ---------- shell ---------- */
+.app{min-height:100vh; display:grid; grid-template-columns:216px 1fr; grid-template-rows:auto 1fr}
+.top{
+  grid-column:1/-1; display:flex; align-items:center; gap:14px; flex-wrap:wrap;
+  padding:10px 18px; background:var(--panel); border-bottom:1px solid var(--line);
+}
+.brand{display:flex; align-items:baseline; gap:9px}
+.brand .mark{
+  font-family:"Barlow Condensed",sans-serif; font-weight:700; font-size:19px; letter-spacing:.04em;
+  color:var(--panel); background:var(--ink); padding:1px 8px 2px; border-radius:3px;
+}
+.brand .name{font-family:"Barlow Condensed",sans-serif; font-size:20px; font-weight:600; letter-spacing:.02em}
+.brand .sub{font-size:11px; color:var(--ink3)}
+.top .spacer{flex:1}
+.chip-demo{
+  display:inline-flex; align-items:center; gap:6px; font-size:11px; font-weight:600;
+  color:var(--ambar); background:var(--ambar-soft); border:1px solid color-mix(in srgb,var(--ambar) 34%,transparent);
+  padding:4px 9px; border-radius:99px;
+}
+.chip-demo .dot{width:6px;height:6px;border-radius:50%;background:var(--ambar);animation:pulso 2.4s ease-in-out infinite}
+@keyframes pulso{0%,100%{opacity:1}50%{opacity:.3}}
+.seg{display:flex; border:1px solid var(--line2); border-radius:8px; overflow:hidden; background:var(--panel2)}
+.seg button{
+  border:0; background:transparent; color:var(--ink2); padding:6px 12px; font-size:12.5px; font-weight:500;
+  border-right:1px solid var(--line2);
+}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--azul); color:#fff}
+.seg.oculto{display:none}
+.quien{display:flex; flex-direction:column; gap:1px}
+.quien select{
+  border:1px solid var(--line2); border-radius:8px; padding:5px 9px; background:var(--panel2); color:var(--ink);
+  font-family:inherit; font-size:12.5px; font-weight:600; max-width:230px;
+}
+.solo-admin.oculto{display:none!important}
+.aviso-rol{
+  display:flex; align-items:center; gap:9px; flex-wrap:wrap; font-size:12.5px;
+  background:var(--azul-soft); color:var(--azul-ink); border:1px solid color-mix(in srgb,var(--azul) 30%,transparent);
+  border-radius:var(--r); padding:9px 13px; margin-bottom:14px;
+}
+.aviso-rol b{font-weight:600}
+.sw[disabled]{opacity:.45; cursor:not-allowed}
+
+.side{
+  background:var(--panel); border-right:1px solid var(--line); padding:14px 10px;
+  display:flex; flex-direction:column; gap:2px;
+}
+.side .grp{padding:14px 8px 6px}
+.nav{
+  display:flex; align-items:center; gap:9px; width:100%; text-align:left;
+  border:0; background:transparent; color:var(--ink2); padding:8px 10px; border-radius:8px;
+  font-size:13.5px; font-weight:500;
+}
+.nav:hover{background:var(--panel3); color:var(--ink)}
+.nav[aria-current="true"]{background:var(--azul-soft); color:var(--azul-ink); font-weight:600}
+.nav .ico{width:17px; text-align:center; opacity:.85}
+.nav .cnt{
+  margin-left:auto; font-family:"IBM Plex Mono",monospace; font-size:11px; font-weight:600;
+  background:var(--panel3); color:var(--ink2); padding:1px 6px; border-radius:99px;
+}
+.nav .cnt.alerta{background:var(--rojo); color:#fff}
+.side .pie{margin-top:auto; padding:10px 10px 2px; font-size:11px; color:var(--ink3); line-height:1.45; border-top:1px solid var(--line)}
+
+.main{padding:20px 22px 60px; overflow-x:hidden; min-width:0}
+.vista{display:none; animation:sube .22s ease both}
+.vista.on{display:block}
+@keyframes sube{from{opacity:.4; transform:translateY(4px)}to{opacity:1;transform:none}}
+.cab{display:flex; align-items:flex-end; gap:14px; flex-wrap:wrap; margin-bottom:16px}
+.cab h1{font-size:27px; line-height:1.1}
+.cab p{margin:2px 0 0; color:var(--ink2); font-size:13px; max-width:62ch}
+
+/* ---------- tiles ---------- */
+.tiles{display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-bottom:16px}
+.tile{background:var(--panel); border:1px solid var(--line); border-radius:var(--r); padding:13px 14px; box-shadow:var(--sombra)}
+.tile .k{font-size:10.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink3)}
+.tile .v{font-family:"Barlow Condensed",sans-serif; font-size:34px; font-weight:600; line-height:1.05; margin-top:4px; font-variant-numeric:tabular-nums}
+.tile .n{font-size:11.5px; color:var(--ink2); margin-top:2px}
+.tile.mal{border-left:3px solid var(--rojo)} .tile.mal .v{color:var(--rojo)}
+.tile.ok{border-left:3px solid var(--verde)} .tile.ok .v{color:var(--verde)}
+.tile.ojo{border-left:3px solid var(--ambar)} .tile.ojo .v{color:var(--ambar)}
+
+.alerta-barra{
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  background:var(--rojo-soft); border:1px solid color-mix(in srgb,var(--rojo) 32%,transparent);
+  border-radius:var(--r); padding:11px 14px; margin-bottom:16px;
+}
+.alerta-barra strong{color:var(--rojo)}
+.btn{
+  border:1px solid var(--line2); background:var(--panel); color:var(--ink); border-radius:7px;
+  padding:6px 12px; font-size:12.5px; font-weight:500;
+}
+.btn:hover{background:var(--panel3)}
+.btn.pri{background:var(--azul); border-color:var(--azul); color:#fff}
+.btn.pri:hover{filter:brightness(1.08)}
+.btn.sm{padding:4px 9px; font-size:11.5px}
+
+.cols2{display:grid; grid-template-columns:1.15fr .85fr; gap:14px; align-items:start}
+.caja{background:var(--panel); border:1px solid var(--line); border-radius:var(--r); box-shadow:var(--sombra); overflow:hidden}
+.caja > header{display:flex; align-items:center; gap:10px; padding:12px 14px; border-bottom:1px solid var(--line)}
+.caja > header h2{font-size:17px}
+.caja > header .der{margin-left:auto; font-size:11.5px; color:var(--ink3)}
+.caja .cuerpo{padding:14px}
+
+/* ---------- lista de leads ---------- */
+.fila{display:flex; align-items:center; gap:11px; padding:10px 14px; border-bottom:1px solid var(--line); cursor:pointer; background:transparent; border-left:0;border-right:0;border-top:0; width:100%; text-align:left}
+.fila:last-child{border-bottom:0}
+.fila:hover{background:var(--panel2)}
+.av{
+  width:30px; height:30px; border-radius:50%; display:grid; place-items:center; flex:none;
+  font-family:"Barlow Condensed",sans-serif; font-weight:600; font-size:13px; color:#fff; letter-spacing:.02em;
+}
+.fila .txt{min-width:0; flex:1}
+.fila .nm{font-weight:600; font-size:13.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.fila .ms{font-size:12px; color:var(--ink2); white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+.reloj{font-family:"IBM Plex Mono",monospace; font-size:11.5px; font-weight:600; padding:2px 7px; border-radius:99px; white-space:nowrap; flex:none}
+.reloj.rojo{background:var(--rojo-soft); color:var(--rojo)}
+.reloj.ambar{background:var(--ambar-soft); color:var(--ambar)}
+.reloj.verde{background:var(--verde-soft); color:var(--verde)}
+
+/* ---------- kanban ---------- */
+.tablero{display:grid; grid-template-columns:repeat(6,minmax(178px,1fr)); gap:10px; overflow-x:auto; padding-bottom:8px; align-items:start}
+.col{background:var(--panel2); border:1px solid var(--line); border-radius:var(--r); min-height:120px; display:flex; flex-direction:column}
+.col > h3{
+  display:flex; align-items:center; gap:7px; padding:10px 11px; font-size:13px; letter-spacing:.06em;
+  text-transform:uppercase; color:var(--ink2); border-bottom:1px solid var(--line);
+}
+.col > h3 .n{margin-left:auto; font-family:"IBM Plex Mono",monospace; font-size:11px; color:var(--ink3)}
+.col .zona{padding:8px; display:flex; flex-direction:column; gap:8px; flex:1; min-height:60px}
+.col.sobre{outline:2px dashed var(--azul); outline-offset:-3px; background:var(--azul-soft)}
+.tarj{
+  background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:9px 10px; cursor:grab;
+  box-shadow:0 1px 2px rgba(13,27,38,.05); display:flex; flex-direction:column; gap:5px;
+}
+.tarj:hover{border-color:var(--line2)}
+.tarj:active{cursor:grabbing}
+.tarj.arrastrando{opacity:.4}
+.tarj .l1{display:flex; align-items:center; gap:7px}
+.tarj .nm{font-weight:600; font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
+.tarj .mt{font-size:11.5px; color:var(--ink2)}
+.tarj .l3{display:flex; align-items:center; gap:6px; flex-wrap:wrap}
+.pill{font-size:10.5px; font-weight:600; padding:2px 7px; border-radius:99px; background:var(--panel3); color:var(--ink2)}
+.pill.iq{background:var(--azul-soft); color:var(--azul-ink)}
+.pill.pu{background:var(--verde-soft); color:var(--verde)}
+.tarj .plata{font-family:"IBM Plex Mono",monospace; font-size:11.5px; font-weight:600; color:var(--ink2); margin-left:auto}
+
+/* ---------- ficha ---------- */
+.velo{position:fixed; inset:0; background:rgba(8,18,26,.42); opacity:0; pointer-events:none; transition:opacity .2s; z-index:40}
+.velo.on{opacity:1; pointer-events:auto}
+.ficha{
+  position:fixed; top:0; right:0; height:100%; width:min(420px,100%); background:var(--panel);
+  border-left:1px solid var(--line); z-index:50; transform:translateX(102%); transition:transform .24s ease;
+  display:flex; flex-direction:column;
+}
+.ficha.on{transform:none}
+.ficha header{padding:13px 15px; border-bottom:1px solid var(--line); display:flex; gap:11px; align-items:center}
+.ficha header .x{margin-left:auto; border:0; background:transparent; color:var(--ink3); font-size:19px; line-height:1; padding:4px 6px}
+.ficha .datos{padding:11px 15px; border-bottom:1px solid var(--line); display:grid; grid-template-columns:1fr 1fr; gap:9px 12px; background:var(--panel2)}
+.dato .k{font-size:10px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink3)}
+.dato .v{font-size:13px; font-weight:500; margin-top:1px}
+.chat{flex:1; overflow-y:auto; padding:14px; display:flex; flex-direction:column; gap:8px; background:var(--panel2)}
+.msg{max-width:82%; padding:7px 10px; border-radius:11px; font-size:13px; line-height:1.42; box-shadow:0 1px 1px rgba(13,27,38,.06)}
+.msg .h{display:block; font-family:"IBM Plex Mono",monospace; font-size:9.5px; color:var(--ink3); margin-top:3px}
+.msg .orig{
+  display:inline-flex; align-items:center; gap:3px; margin-left:6px; padding:0 5px;
+  border-radius:99px; font-size:9px; font-weight:600; letter-spacing:.02em;
+  background:var(--panel3); color:var(--ink3);
+}
+.msg .orig.crm{background:var(--azul-soft); color:var(--azul-ink)}
+.msg.cli{background:var(--panel); border:1px solid var(--line); border-bottom-left-radius:3px; align-self:flex-start}
+.msg.ven{background:var(--verde-soft); border:1px solid color-mix(in srgb,var(--verde) 26%,transparent); border-bottom-right-radius:3px; align-self:flex-end}
+.msg.sis{align-self:center; background:var(--ambar-soft); color:var(--ambar); font-size:11px; font-weight:600; border-radius:99px; padding:3px 11px; box-shadow:none}
+.plantillas{display:flex; gap:6px; flex-wrap:wrap; padding:9px 14px 0}
+.plantillas .btn{font-size:11px; padding:4px 9px}
+.escribir{display:flex; gap:8px; padding:11px 14px 14px; border-top:1px solid var(--line); margin-top:9px}
+.escribir input{
+  flex:1; border:1px solid var(--line2); border-radius:8px; padding:8px 11px; font-family:inherit; font-size:13px;
+  background:var(--panel2); color:var(--ink);
+}
+.acciones{display:flex; gap:7px; padding:11px 14px; border-top:1px solid var(--line); flex-wrap:wrap; align-items:center}
+.acciones select{
+  border:1px solid var(--line2); border-radius:7px; padding:6px 9px; background:var(--panel2); color:var(--ink);
+  font-family:inherit; font-size:12.5px;
+}
+
+/* ---------- tablas / barras ---------- */
+table{width:100%; border-collapse:collapse; font-size:13px}
+th{text-align:left; font-size:10.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--ink3); padding:9px 14px; border-bottom:1px solid var(--line)}
+td{padding:10px 14px; border-bottom:1px solid var(--line)}
+tr:last-child td{border-bottom:0}
+td.num{font-family:"IBM Plex Mono",monospace; font-variant-numeric:tabular-nums; text-align:right; font-weight:500}
+.barra{height:7px; border-radius:99px; background:var(--panel3); overflow:hidden; min-width:70px}
+.barra i{display:block; height:100%; border-radius:99px; background:var(--azul)}
+.barra i.v{background:var(--verde)} .barra i.r{background:var(--rojo)} .barra i.a{background:var(--ambar)}
+
+.embudo{display:flex; flex-direction:column; gap:7px}
+.paso{display:grid; grid-template-columns:150px 1fr auto; gap:12px; align-items:center}
+.paso .et{font-size:12.5px; color:var(--ink2)}
+.paso .tr{height:26px; background:var(--panel3); border-radius:5px; overflow:hidden}
+.paso .tr i{display:block; height:100%; background:linear-gradient(90deg,var(--azul),color-mix(in srgb,var(--azul) 62%,var(--verde)))}
+.paso.fin .tr i{background:var(--rojo)}
+.paso .vl{font-family:"IBM Plex Mono",monospace; font-size:12.5px; font-weight:600; min-width:74px; text-align:right}
+
+.nota{font-size:12px; color:var(--ink2); background:var(--panel2); border:1px solid var(--line); border-left:3px solid var(--azul); border-radius:8px; padding:10px 13px; line-height:1.5}
+.nota b{color:var(--ink)}
+
+.reglas{display:flex; flex-direction:column}
+.regla{display:flex; gap:12px; align-items:flex-start; padding:12px 14px; border-bottom:1px solid var(--line)}
+.regla:last-child{border-bottom:0}
+.regla .tx{flex:1}
+.regla .tx b{font-size:13.5px}
+.regla .tx p{margin:2px 0 0; font-size:12.5px; color:var(--ink2)}
+.sw{width:38px; height:22px; border-radius:99px; border:1px solid var(--line2); background:var(--panel3); position:relative; flex:none; transition:background .18s}
+.sw::after{content:""; position:absolute; top:2px; left:2px; width:16px; height:16px; border-radius:50%; background:var(--panel); box-shadow:0 1px 2px rgba(0,0,0,.25); transition:transform .18s}
+.sw[aria-pressed="true"]{background:var(--verde); border-color:var(--verde)}
+.sw[aria-pressed="true"]::after{transform:translateX(16px)}
+
+.toast{
+  position:fixed; left:50%; bottom:22px; transform:translate(-50%,80px); z-index:70;
+  background:var(--ink); color:var(--ground); padding:10px 16px; border-radius:99px; font-size:13px; font-weight:500;
+  box-shadow:0 8px 26px rgba(0,0,0,.3); opacity:0; transition:transform .26s, opacity .26s; max-width:92vw;
+}
+.toast.on{transform:translate(-50%,0); opacity:1}
+
+.cierre{margin-top:20px; background:var(--panel); border:1px solid var(--line); border-radius:var(--r); padding:18px 20px; box-shadow:var(--sombra)}
+.cierre h2{font-size:21px} .cierre p{color:var(--ink2); margin:6px 0 0; max-width:70ch; font-size:13.5px}
+.cierre .datos{display:flex; gap:26px; flex-wrap:wrap; margin-top:14px; padding-top:14px; border-top:1px solid var(--line)}
+.cierre .d .k{font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink3); font-weight:600}
+.cierre .d .v{font-family:"Barlow Condensed",sans-serif; font-size:25px; font-weight:600}
+
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  .side{flex-direction:row; overflow-x:auto; border-right:0; border-bottom:1px solid var(--line); padding:8px}
+  .side .grp,.side .pie{display:none}
+  .nav{width:auto; white-space:nowrap}
+  .tiles{grid-template-columns:repeat(2,1fr)}
+  .cols2{grid-template-columns:1fr}
+  .paso{grid-template-columns:112px 1fr auto}
+  .main{padding:16px 14px 50px}
+}
+</style>
+
+<div class="app">
+  <div class="top">
+    <div class="brand">
+      <span class="mark">trylux</span>
+      <span>
+        <span class="name">Centro de Ventas</span>
+        <span class="sub">· Crossland · Bajaj Iquitos & Pucallpa</span>
+      </span>
+    </div>
+    <div class="spacer"></div>
+    <label class="quien">
+      <span class="eyebrow">Entró como</span>
+      <select id="sel-perfil" aria-label="Cambiar de usuario"></select>
+    </label>
+    <div class="seg" id="seg-tiendas" role="group" aria-label="Filtrar por tienda">
+      <button data-ciudad="todas" aria-pressed="true">Las 2 tiendas</button>
+      <button data-ciudad="Iquitos" aria-pressed="false">Iquitos</button>
+      <button data-ciudad="Pucallpa" aria-pressed="false">Pucallpa</button>
+    </div>
+    <span class="chip-demo"><span class="dot"></span> Demostración · datos de ejemplo</span>
+  </div>
+
+  <nav class="side">
+    <div class="grp eyebrow">Operación diaria</div>
+    <button class="nav" data-vista="tablero" aria-current="true"><span class="ico">◧</span> Tablero <span class="cnt" id="c-hoy">23</span></button>
+    <button class="nav" data-vista="bandeja"><span class="ico">✳</span> Sin responder <span class="cnt alerta" id="c-sin">4</span></button>
+    <button class="nav" data-vista="embudo"><span class="ico">▤</span> Embudo <span class="cnt" id="c-emb">16</span></button>
+    <div class="grp eyebrow">Control</div>
+    <button class="nav" data-vista="vendedores"><span class="ico">◔</span> <span id="nav-vend-txt">Vendedores</span></button>
+    <button class="nav" data-vista="seguimiento"><span class="ico">↻</span> Seguimiento</button>
+    <button class="nav" data-vista="reporte"><span class="ico">◈</span> Reporte del mes</button>
+    <button class="nav" data-vista="activar"><span class="ico">⚑</span> Para activarlo</button>
+    <div class="pie">
+      Servidor a nombre de Crossland.<br>
+      Los clientes viven aquí, no en el celular del vendedor.
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="aviso-rol" id="aviso-rol"></div>
+
+    <!-- ============ TABLERO ============ -->
+    <section class="vista on" id="v-tablero">
+      <div class="cab">
+        <div>
+          <h1>Lo que está pasando hoy</h1>
+          <p>Cada persona que escribe por la pauta entra aquí sola, con su nombre, su ciudad y la moto que preguntó. Nadie se pierde en un celular.</p>
+        </div>
+      </div>
+
+      <div class="tiles">
+        <div class="tile"><div class="k">Escribieron hoy</div><div class="v" id="t-hoy">23</div><div class="n">17 desde los anuncios</div></div>
+        <div class="tile mal"><div class="k">Sin responder</div><div class="v" id="t-sin">4</div><div class="n">el más viejo, hace 3 h 40 m</div></div>
+        <div class="tile ojo"><div class="k">1.ª respuesta</div><div class="v" id="t-resp">1:42</div><div class="n">meta del gerente: 15 min</div></div>
+        <div class="tile"><div class="k">En negociación</div><div class="v" id="t-neg">9</div><div class="n">cotizados, en visita o con inicial</div></div>
+        <div class="tile ok"><div class="k">Motos del mes</div><div class="v" id="t-mot">18</div><div class="n">meta 43 · van 42 %</div></div>
+      </div>
+
+      <div class="alerta-barra" id="banda-alerta">
+        <strong id="txt-alerta">3 personas llevan más de 2 horas esperando respuesta.</strong>
+        <span style="color:var(--ink2)" id="desglose-alerta">Iquitos 2 · Pucallpa 1</span>
+        <button class="btn" style="margin-left:auto" onclick="irA('bandeja')">Ver quiénes son</button>
+      </div>
+
+      <div class="cols2">
+        <div class="caja">
+          <header>
+            <h2>Últimos que escribieron</h2>
+            <span class="der">Toca a cualquiera para abrir su conversación</span>
+          </header>
+          <div id="lista-recientes"></div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:14px">
+          <div class="caja solo-admin">
+            <header><h2>Las dos tiendas, hoy</h2><span class="der">Solo administración</span></header>
+            <div class="cuerpo" id="comparativo"></div>
+          </div>
+          <div class="caja">
+            <header><h2>Motos más preguntadas</h2><span class="der">últimos 7 días</span></header>
+            <div class="cuerpo" id="motos-top"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BANDEJA ============ -->
+    <section class="vista" id="v-bandeja">
+      <div class="cab">
+        <div>
+          <h1>Nadie se queda esperando</h1>
+          <p>La lista se ordena sola por quien lleva más tiempo sin respuesta. El reloj rojo es plata parada: en agosto, cada conversación costó S/ 1,05 en publicidad.</p>
+        </div>
+      </div>
+      <div class="caja"><div id="lista-espera"></div></div>
+      <div class="nota" style="margin-top:14px">
+        <b>El vendedor no cambia de herramienta.</b> Sigue contestando desde su WhatsApp de siempre, en su celular. Este reloj corre igual, porque el sistema ve la conversación venga de donde venga. Así la jefa sabe quién está esperando <b>sin tener que pedirle el teléfono a nadie</b>.
+      </div>
+      <div class="nota" style="margin-top:10px">
+        <b>Por qué importa:</b> en agosto entraron 1.434 conversaciones y se cerraron 18 motos. El cuello de botella nunca fue traer gente — fue el tiempo que pasó entre que el cliente escribió y alguien le contestó.
+      </div>
+    </section>
+
+    <!-- ============ EMBUDO ============ -->
+    <section class="vista" id="v-embudo">
+      <div class="cab">
+        <div>
+          <h1>Dónde va cada cliente</h1>
+          <p>Arrastra una tarjeta de una columna a otra: así el vendedor mueve al cliente y la jefa de tienda ve el avance sin preguntar. Toca la tarjeta para abrir el chat.</p>
+        </div>
+      </div>
+      <div class="tablero" id="tablero"></div>
+      <div class="nota" style="margin-top:14px">
+        <b>Si el vendedor se va, la base se queda.</b> Cada conversación, cotización y nota vive en el servidor de Crossland — no en un teléfono personal.
+      </div>
+    </section>
+
+    <!-- ============ VENDEDORES ============ -->
+    <section class="vista" id="v-vendedores">
+      <div class="cab" id="cab-vendedores"></div>
+      <div class="caja">
+        <header><h2 id="tit-vendedores">Ranking del mes</h2><span class="der">Datos de ejemplo · así se vería con su operación</span></header>
+        <div style="overflow-x:auto">
+          <table>
+            <thead><tr><th>Vendedor</th><th>Tienda</th><th style="text-align:right">Atendidos</th><th style="text-align:right">Respuesta</th><th style="text-align:right">Motos</th><th style="text-align:right">Cierre</th><th style="width:130px">&nbsp;</th></tr></thead>
+            <tbody id="tb-vendedores"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="nota" style="margin-top:14px">
+        <b>Lo que salta a la vista:</b> quien contesta en minutos cierra hasta 4 veces más que quien contesta al otro día. No es suerte del vendedor: es el reloj.
+      </div>
+    </section>
+
+    <!-- ============ SEGUIMIENTO ============ -->
+    <section class="vista" id="v-seguimiento">
+      <div class="cab">
+        <div>
+          <h1>El sistema no deja enfriar a nadie</h1>
+          <p>El cliente que preguntó y no volvió recibe un toque solo, en el momento correcto, con su nombre y la moto que preguntó. Se prende y se apaga con un botón.</p>
+        </div>
+      </div>
+      <div class="cols2">
+        <div>
+          <div class="caja">
+            <header><h2>Reglas activas</h2><span class="der">Toca para prender o apagar</span></header>
+            <div class="reglas" id="reglas"></div>
+          </div>
+          <p class="nota" id="nota-reglas" style="margin-top:12px"></p>
+        </div>
+        <div class="caja">
+          <header><h2>Mensajes listos</h2><span class="der">Los redactamos nosotros</span></header>
+          <div class="cuerpo" id="plantillas-lista" style="display:flex;flex-direction:column;gap:10px"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ REPORTE ============ -->
+    <section class="vista" id="v-reporte">
+      <div class="cab">
+        <div>
+          <h1>Agosto 2026, de verdad</h1>
+          <p>Estos no son números de ejemplo: son los de su propia pauta de agosto, los mismos que vimos en la reunión. Es lo que el Centro de Ventas mostraría todos los días, solo.</p>
+        </div>
+      </div>
+
+      <div class="tiles" style="grid-template-columns:repeat(4,1fr)" id="tiles-reporte"></div>
+
+      <div class="cols2">
+        <div class="caja">
+          <header><h2>De la publicidad a la moto</h2><span class="der" id="et-embudo">agosto 2026</span></header>
+          <div class="cuerpo" id="cuerpo-embudo"></div>
+        </div>
+
+        <div class="caja solo-admin">
+          <header><h2>Iquitos contra Pucallpa</h2><span class="der">misma pauta, mismo producto</span></header>
+          <div class="cuerpo">
+            <div style="display:flex; flex-direction:column; gap:16px">
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:baseline">
+                  <b>Pucallpa</b><span class="mono" style="font-size:12.5px">851 conversaciones → 15 motos</span>
+                </div>
+                <div class="barra" style="height:11px; margin-top:6px"><i class="v" style="width:100%"></i></div>
+                <div style="font-size:12px; color:var(--ink2); margin-top:4px">Cierra el <b style="color:var(--verde)">1,8 %</b></div>
+              </div>
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:baseline">
+                  <b>Iquitos</b><span class="mono" style="font-size:12.5px">583 conversaciones → 3 motos</span>
+                </div>
+                <div class="barra" style="height:11px; margin-top:6px"><i class="r" style="width:28%"></i></div>
+                <div style="font-size:12px; color:var(--ink2); margin-top:4px">Cierra el <b style="color:var(--rojo)">0,5 %</b></div>
+              </div>
+              <p class="nota" style="border-left-color:var(--ambar)">
+                <b>Pucallpa cierra 3,4 veces mejor que Iquitos</b> con la misma publicidad. Si Iquitos cerrara como Pucallpa, serían <b>10 motos más al mes</b> sin gastar un sol adicional en anuncios.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="caja" style="margin-top:14px">
+        <header><h2>Por qué se cayeron los que no compraron</h2><span class="der">el sistema lo pregunta y lo guarda</span></header>
+        <div class="cuerpo" id="motivos"></div>
+      </div>
+
+      <div class="cierre">
+        <h2>Lo que está viendo es el sistema, no una foto</h2>
+        <p>Todo lo de esta página funciona: arrastre tarjetas, abra un chat, conteste, prenda y apague una regla. Con su WhatsApp conectado, los nombres y las motos serían los de Iquitos y Pucallpa, en vivo. Se entrega en 7 días.</p>
+        <div class="datos">
+          <div class="d"><div class="k">Implementación</div><div class="v">USD 690</div></div>
+          <div class="d"><div class="k">Se paga</div><div class="v">2 cuotas</div></div>
+          <div class="d"><div class="k">Desde el mes 2</div><div class="v">USD 69/mes</div></div>
+          <div class="d"><div class="k">Vendedores y números</div><div class="v">Ilimitados</div></div>
+          <div class="d"><div class="k">Entrega</div><div class="v">7 días</div></div>
+        </div>
+        <p style="margin-top:12px; font-size:12.5px; color:var(--ink3)">Recuperar una sola moto al mes paga el sistema completo y su primer año.</p>
+        <p style="margin-top:14px; font-size:13.5px">
+          <button class="btn pri" onclick="irA('activar')">Ver qué se necesita para activarlo</button>
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ PARA ACTIVARLO ============ -->
+    <section class="vista" id="v-activar">
+      <div class="cab">
+        <div>
+          <h1>Para conectar sus números</h1>
+          <p>El sistema que acaba de ver ya está construido. Para engancharlo al WhatsApp de las tiendas, WhatsApp exige un paso previo: verificar que el concesionario es una empresa real. Es gratis, se hace una sola vez y lo acompañamos nosotros.</p>
+        </div>
+      </div>
+
+      <div class="cols2">
+        <div class="caja">
+          <header><h2>1 · Documentos que deben tener listos</h2><span class="der">basta con UNO de estos</span></header>
+          <div class="cuerpo">
+            <div class="reglas" style="margin:-14px -14px 0">
+              <div class="regla"><div class="tx"><b>Ficha RUC de SUNAT</b><p>El documento de la empresa con su nombre legal y dirección.</p></div></div>
+              <div class="regla"><div class="tx"><b>Constitución o licencia de funcionamiento</b><p>El acta de constitución o la licencia municipal del concesionario.</p></div></div>
+              <div class="regla"><div class="tx"><b>Estado de cuenta bancario del negocio</b><p>De los últimos 12 meses, a nombre de la empresa.</p></div></div>
+              <div class="regla"><div class="tx"><b>Recibo de luz, agua o teléfono fijo</b><p>Del local, a nombre del concesionario y de menos de un año.</p></div></div>
+            </div>
+            <p class="nota" style="margin-top:14px">
+              El documento debe mostrar <b>el nombre legal y la dirección</b> tal como están registrados, y tener <b>menos de un año</b>.
+              Se sube una foto o un PDF legible; no hay que enviar nada físico.
+            </p>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:14px">
+          <div class="caja">
+            <header><h2>2 · Una vez por cada tienda</h2></header>
+            <div class="cuerpo">
+              <p style="margin:0 0 10px; color:var(--ink2); font-size:13.5px">
+                Iquitos y Pucallpa están como <b>dos cuentas separadas</b> en Meta, así que el trámite se hace <b>dos veces</b>, una con los documentos de cada concesionario.
+              </p>
+              <div style="display:flex; gap:10px; flex-wrap:wrap">
+                <span class="pill iq" style="font-size:12px; padding:5px 11px">Bajaj Iquitos</span>
+                <span class="pill pu" style="font-size:12px; padding:5px 11px">Bajaj Pucallpa</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="caja">
+            <header><h2>3 · El día de la conexión</h2><span class="der">15 minutos por tienda</span></header>
+            <div class="cuerpo">
+              <div class="reglas" style="margin:-14px">
+                <div class="regla"><div class="tx"><b>Alguien en la tienda con el celular</b><p>Hay un paso que se confirma tocando un botón en el teléfono.</p></div></div>
+                <div class="regla"><div class="tx"><b>La app de WhatsApp Business actualizada</b><p>Versión 2.24.17 o más nueva. No se desinstala ni se cambia de número.</p></div></div>
+                <div class="regla"><div class="tx"><b>Una tarjeta en la cuenta de Meta</b><p>Meta la exige para cobrar los mensajes de seguimiento. Ese cobro es de ustedes y va aparte.</p></div></div>
+                <div class="regla"><div class="tx"><b>Fuera de hora pico</b><p>Ese día se desconectan los WhatsApp Web abiertos y los volvemos a conectar.</p></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cierre" style="margin-top:14px">
+        <h2>Qué pasa mientras tanto</h2>
+        <p>La verificación depende de los tiempos de Meta, no de nosotros. Por eso <b>el sistema se entrega en 7 días</b> y funcionando: el embudo, los reportes y el control de cada tienda no dependen de ese trámite. La conexión del WhatsApp se hace apenas la verificación esté aprobada, y si necesitan arrancar antes, existe una vía alterna para conectar sin esperar.</p>
+        <div class="datos">
+          <div class="d"><div class="k">Costo del trámite</div><div class="v">Gratis</div></div>
+          <div class="d"><div class="k">Se hace</div><div class="v">Una sola vez</div></div>
+          <div class="d"><div class="k">Quién lo acompaña</div><div class="v">Nosotros</div></div>
+          <div class="d"><div class="k">El número</div><div class="v">No cambia</div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="velo" id="velo" onclick="cerrarFicha()"></div>
+<aside class="ficha" id="ficha" aria-label="Ficha del cliente">
+  <header>
+    <span class="av" id="f-av">--</span>
+    <span>
+      <div style="font-weight:600" id="f-nombre">—</div>
+      <div style="font-size:11.5px; color:var(--ink3)" id="f-tel">—</div>
+    </span>
+    <button class="x" onclick="cerrarFicha()" aria-label="Cerrar">✕</button>
+  </header>
+  <div class="datos">
+    <div class="dato"><div class="k">Moto que preguntó</div><div class="v" id="f-moto">—</div></div>
+    <div class="dato"><div class="k">Precio de lista</div><div class="v mono" id="f-precio">—</div></div>
+    <div class="dato"><div class="k">Tienda</div><div class="v" id="f-ciudad">—</div></div>
+    <div class="dato"><div class="k">Vendedor</div><div class="v" id="f-vend">—</div></div>
+    <div class="dato"><div class="k">Llegó por</div><div class="v" id="f-origen">—</div></div>
+    <div class="dato"><div class="k">Sin responder</div><div class="v" id="f-espera">—</div></div>
+  </div>
+  <div class="chat" id="f-chat"></div>
+  <div class="plantillas" id="f-plantillas"></div>
+  <div class="escribir">
+    <input id="f-input" placeholder="Escribe tu respuesta…" autocomplete="off">
+    <button class="btn pri" onclick="enviarMsg()">Enviar</button>
+  </div>
+  <p id="f-firma" style="margin:0; padding:0 14px 10px; font-size:11px; color:var(--ink3)"></p>
+  <div class="acciones">
+    <span class="eyebrow">Mover a</span>
+    <select id="f-estado" onchange="moverDesdeFicha(this.value)"></select>
+    <button class="btn sm" onclick="marcarPerdido()">Marcar perdido</button>
+  </div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const ETAPAS = [
+  {id:'nuevo',      nom:'Nuevo'},
+  {id:'contactado', nom:'Contactado'},
+  {id:'cotizado',   nom:'Cotizado'},
+  {id:'visita',     nom:'Visita en tienda'},
+  {id:'inicial',    nom:'Dio inicial'},
+  {id:'vendido',    nom:'Moto entregada'}
+];
+
+const MOTOS = {
+  'Boxer CT 100':4290, 'Platina 100':4590, 'Discover 125':5990,
+  'Pulsar NS 160':8990, 'Pulsar N160':9790, 'Pulsar NS 200':10990, 'Dominar 400':17900
+};
+
+const VEND = [
+  {n:'Milagros Tuesta', c:'Pucallpa', at:214, resp:'8 min',  motos:7, cierre:3.3},
+  {n:'Jhon Vásquez',    c:'Pucallpa', at:331, resp:'21 min', motos:6, cierre:1.8},
+  {n:'Carlos Shapiama', c:'Pucallpa', at:306, resp:'47 min', motos:2, cierre:0.7},
+  {n:'Rosa Panduro',    c:'Iquitos',  at:298, resp:'2 h 10', motos:2, cierre:0.7},
+  {n:'Elmer Ríos',      c:'Iquitos',  at:285, resp:'5 h 30', motos:1, cierre:0.4}
+];
+
+let LEADS = [
+  {id:1,  n:'Jhonatan Pinedo',   tel:'+51 965 ***  412', c:'Iquitos',  m:'Pulsar NS 160', e:'nuevo', v:'Rosa Panduro',    esp:220, o:'Anuncio · Pulsar NS 160',
+   chat:[['cli','Buenas, vi el anuncio de la NS 160. ¿Cuánto es la inicial?','14:02'],['cli','¿Hola?','15:20']]},
+  {id:2,  n:'Milagros Sangama',  tel:'+51 942 *** 077', c:'Iquitos',  m:'Boxer CT 100',  e:'nuevo', v:'Elmer Ríos',      esp:145, o:'Anuncio · Boxer trabajo',
+   chat:[['cli','Quiero la Boxer para trabajar, ¿dan crédito sin inicial?','15:12']]},
+  {id:3,  n:'Óscar Tapullima',   tel:'+51 961 *** 338', c:'Pucallpa', m:'Pulsar N160',   e:'nuevo', v:'Jhon Vásquez',    esp:132, o:'Anuncio · N160',
+   chat:[['cli','Hermano buenas, la N160 azul ¿la tienen en tienda?','15:41']]},
+  {id:4,  n:'Rosa Isuiza',       tel:'+51 986 *** 501', c:'Iquitos',  m:'Platina 100',   e:'nuevo', v:'Rosa Panduro',    esp:96,  o:'Anuncio · Platina',
+   chat:[['cli','Buenas tardes, información de la Platina por favor','16:18']]},
+  {id:5,  n:'Wilder Macedo',     tel:'+51 973 *** 244', c:'Pucallpa', m:'Pulsar NS 200', e:'contactado', v:'Milagros Tuesta', esp:12, o:'Anuncio · NS 200',
+   chat:[['cli','¿La NS 200 sigue en promoción?','13:30'],['ven','¡Hola Wilder! Sí, hasta el domingo. Te queda en S/ 10.990 con casco de regalo 🏍️','13:34','movil'],['cli','Ah ya, ¿y con cuánto salgo?','13:51']]},
+  {id:6,  n:'Karina Amasifuén',  tel:'+51 954 *** 190', c:'Pucallpa', m:'Discover 125',  e:'contactado', v:'Jhon Vásquez', esp:28, o:'Anuncio · Discover',
+   chat:[['cli','Buenas, la Discover 125 ¿cuánto de inicial?','12:05'],['ven','Hola Karina, con S/ 900 de inicial ya te la llevas. ¿Es para ti o para tu esposo?','12:19','movil'],['cli','Para mí, trabajo en delivery','12:44']]},
+  {id:7,  n:'Segundo Vela',      tel:'+51 940 *** 763', c:'Iquitos',  m:'Boxer CT 100',  e:'contactado', v:'Elmer Ríos',  esp:55, o:'Anuncio · Boxer trabajo',
+   chat:[['cli','Necesito una moto para mototaxi','10:11'],['ven','Buen día don Segundo, la Boxer CT 100 es la que más sale para eso. S/ 4.290','11:40']]},
+  {id:8,  n:'Yanira Cachique',   tel:'+51 928 *** 615', c:'Pucallpa', m:'Pulsar N160',   e:'cotizado', v:'Milagros Tuesta', esp:6, o:'Anuncio · N160',
+   chat:[['cli','Quiero la N160','09:02'],['ven','Hola Yanira 😊 Te paso la cotización: S/ 9.790 al contado, o S/ 1.500 de inicial y 18 cuotas de S/ 545. Incluye casco y SOAT','09:08','crm'],['cli','Ya, lo converso con mi esposo y te aviso','09:31']]},
+  {id:9,  n:'Elvis Saavedra',    tel:'+51 916 *** 458', c:'Pucallpa', m:'Dominar 400',   e:'cotizado', v:'Jhon Vásquez', esp:18, o:'Anuncio · Dominar',
+   chat:[['cli','La Dominar 400, ¿precio final?','08:20'],['ven','S/ 17.900 con top case. ¿Vienes a verla hoy?','08:35'],['cli','El sábado paso','08:52']]},
+  {id:10, n:'Ruth Navarro',      tel:'+51 995 *** 226', c:'Iquitos',  m:'Platina 100',   e:'cotizado', v:'Rosa Panduro', esp:41, o:'Anuncio · Platina',
+   chat:[['cli','¿La Platina en cuotas?','11:15'],['ven','Sí Ruth, S/ 800 de inicial y 12 cuotas de S/ 380','12:02']]},
+  {id:11, n:'Alexander Curico',  tel:'+51 933 *** 890', c:'Pucallpa', m:'Pulsar NS 160', e:'visita', v:'Milagros Tuesta', esp:3, o:'Anuncio · NS 160',
+   chat:[['cli','Voy mañana 10 am a verla','16:40'],['ven','¡Te espero Alexander! Pregunta por Milagros. Av. Centenario 1240','16:44','movil'],['sis','Visita agendada · mañana 10:00','16:44']]},
+  {id:12, n:'Deysi Fasabi',      tel:'+51 977 *** 104', c:'Iquitos',  m:'Discover 125',  e:'visita', v:'Rosa Panduro', esp:9, o:'Anuncio · Discover',
+   chat:[['cli','Paso el viernes en la tarde','14:20'],['ven','Perfecta Deysi, te separo la roja hasta el viernes 6 pm','14:29','crm'],['sis','Visita agendada · viernes 18:00','14:29']]},
+  {id:13, n:'Percy Manihuari',   tel:'+51 951 *** 373', c:'Pucallpa', m:'Pulsar N160',   e:'inicial', v:'Jhon Vásquez', esp:2, o:'Anuncio · N160',
+   chat:[['cli','Ya deposité los S/ 1.500','10:55'],['ven','¡Confirmado Percy! Ya está separada tu N160 negra. Trae DNI el jueves','11:02'],['sis','Inicial recibida · S/ 1.500','11:02']]},
+  {id:14, n:'Bertha Coral',      tel:'+51 969 *** 812', c:'Iquitos',  m:'Boxer CT 100',  e:'inicial', v:'Elmer Ríos', esp:4, o:'Anuncio · Boxer trabajo',
+   chat:[['cli','Voy a dar la inicial hoy','09:40'],['sis','Inicial recibida · S/ 700','13:15']]},
+  {id:15, n:'Iván Dávila',       tel:'+51 989 *** 557', c:'Pucallpa', m:'Pulsar NS 200', e:'vendido', v:'Milagros Tuesta', esp:0, o:'Anuncio · NS 200',
+   chat:[['ven','¡Felicidades Iván! Tu NS 200 está lista 🏁','17:10'],['sis','Moto entregada · S/ 10.990','17:12'],['cli','Gracias hermano, quedó bonita 🔥','17:30']]},
+  {id:16, n:'Jhoselyn Reátegui', tel:'+51 921 *** 049', c:'Pucallpa', m:'Discover 125',  e:'vendido', v:'Jhon Vásquez', esp:0, o:'Anuncio · Discover',
+   chat:[['sis','Moto entregada · S/ 5.990','16:02'],['cli','Ya la estoy manejando, gracias 😄','18:44']]}
+];
+
+const PLANTILLAS = [
+  {t:'Saludo con precio', x:'¡Hola {nombre}! Soy de Bajaj {ciudad} 🏍️ La {moto} está en S/ {precio}. ¿Te interesa al contado o en cuotas?'},
+  {t:'Invitar a la tienda', x:'{nombre}, ¿te animas a verla en persona? Estamos hasta las 7 pm y te la puedo apartar hoy.'},
+  {t:'Opciones de crédito', x:'{nombre}, con la {moto} manejamos inicial desde S/ 900 y hasta 18 cuotas. Solo necesitas DNI y un recibo. ¿Te armo la cotización?'},
+  {t:'Reactivar (24 h)', x:'{nombre}, ¿seguimos con la {moto}? Todavía tengo unidad disponible en tienda 🏍️'}
+];
+
+const REGLAS = [
+  {on:true,  t:'Si nadie contesta en 15 minutos, avisa a la jefa de tienda', d:'La alerta llega al celular de la jefa con el nombre del cliente y el del vendedor que lo tenía.'},
+  {on:true,  t:'A las 24 horas, un solo recordatorio al cliente que no volvió', d:'Un toque, con su nombre y su moto. Uno solo: insistir de más hace que WhatsApp bloquee el número.'},
+  {on:true,  t:'Reparto parejo de los que entran', d:'Los clientes nuevos se reparten entre los vendedores conectados, en orden. Nadie se queda con todos.'},
+  {on:false, t:'Aviso cuando llega stock de la moto que pidió', d:'Guarda a los que preguntaron por una moto agotada y les escribe el día que llega.'},
+  {on:true,  t:'Encuesta después de entregar la moto', d:'A los 3 días pregunta cómo le fue. La respuesta queda en su ficha y sirve para referidos.'}
+];
+
+const MOTIVOS = [
+  ['No le alcanzaba la inicial', 34],
+  ['Nunca le contestaron a tiempo', 27],
+  ['Se fue a la competencia', 18],
+  ['Quería un modelo que no había', 13],
+  ['Solo estaba mirando', 8]
+];
+
+const PERFILES = [
+  {id:'admin',   nom:'Sandra Urbano',   rol:'Administración Crossland',  ciudad:null,       vend:null,
+   ve:'Ve las 2 tiendas, compara vendedores y configura las reglas.'},
+  {id:'jefe-iq', nom:'Lucía Ahuanari',  rol:'Jefa de tienda · Iquitos',  ciudad:'Iquitos',  vend:null,
+   ve:'Ve todos los clientes y vendedores de Iquitos. No ve los números de Pucallpa.'},
+  {id:'jefe-pu', nom:'Édinson Ramírez', rol:'Jefe de tienda · Pucallpa', ciudad:'Pucallpa', vend:null,
+   ve:'Ve todos los clientes y vendedores de Pucallpa. No ve los números de Iquitos.'},
+  {id:'v-rosa',  nom:'Rosa Panduro',    rol:'Vendedora · Iquitos',       ciudad:'Iquitos',  vend:'Rosa Panduro',
+   ve:'Ve y responde SOLO a los clientes que le tocaron. No ve los de sus compañeros.'},
+  {id:'v-elmer', nom:'Elmer Ríos',      rol:'Vendedor · Iquitos',        ciudad:'Iquitos',  vend:'Elmer Ríos',
+   ve:'Ve y responde SOLO a los clientes que le tocaron. No ve los de sus compañeros.'},
+  {id:'v-mila',  nom:'Milagros Tuesta', rol:'Vendedora · Pucallpa',      ciudad:'Pucallpa', vend:'Milagros Tuesta',
+   ve:'Ve y responde SOLO a los clientes que le tocaron. No ve los de sus compañeros.'},
+  {id:'v-jhon',  nom:'Jhon Vásquez',    rol:'Vendedor · Pucallpa',       ciudad:'Pucallpa', vend:'Jhon Vásquez',
+   ve:'Ve y responde SOLO a los clientes que le tocaron. No ve los de sus compañeros.'}
+];
+
+/* agosto 2026 · cifras reales de la pauta */
+const AGOSTO = {
+  total:   {inv:'S/ 1.502', conv:1434, motos:18, cierre:'1,3 %', perdidas:'~25'},
+  Iquitos: {conv:583,  motos:3,  cierre:'0,5 %', perdidas:'~14'},
+  Pucallpa:{conv:851,  motos:15, cierre:'1,8 %', perdidas:'~11'}
+};
+
+let perfil = PERFILES[0];
+let ciudadFiltro = 'todas';
+let leadAbierto = null;
+const $ = s => document.querySelector(s);
+const soles = n => 'S/ ' + n.toLocaleString('es-PE');
+const ini = n => n.split(' ').map(p=>p[0]).slice(0,2).join('');
+const colorAv = n => `hsl(${(n.charCodeAt(0)*13 + n.length*29) % 360} 42% 42%)`;
+const tiempo = m => m<=0 ? 'contestado' : m<60 ? m+' min' : Math.floor(m/60)+' h '+String(m%60).padStart(2,'0');
+const claseReloj = m => m<=0 ? 'verde' : m>=120 ? 'rojo' : m>=45 ? 'ambar' : 'verde';
+const visibles = () => LEADS.filter(l =>
+  (ciudadFiltro==='todas' || l.c===ciudadFiltro) &&
+  (!perfil.vend || l.v===perfil.vend));
+
+function toast(t){
+  const el = $('#toast'); el.textContent = t; el.classList.add('on');
+  clearTimeout(el._t); el._t = setTimeout(()=>el.classList.remove('on'), 2600);
+}
+
+function irA(v){
+  document.querySelectorAll('.vista').forEach(s=>s.classList.toggle('on', s.id==='v-'+v));
+  document.querySelectorAll('.nav').forEach(b=>b.setAttribute('aria-current', String(b.dataset.vista===v)));
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+document.querySelectorAll('.nav').forEach(b=>b.onclick=()=>irA(b.dataset.vista));
+
+document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{
+  ciudadFiltro = b.dataset.ciudad;
+  document.querySelectorAll('.seg button').forEach(o=>o.setAttribute('aria-pressed', String(o===b)));
+  pintarTodo();
+  toast(ciudadFiltro==='todas' ? 'Viendo las dos tiendas' : 'Viendo solo '+ciudadFiltro);
+});
+
+/* ---------- quién entró: administración o cada tienda ---------- */
+$('#sel-perfil').innerHTML = PERFILES.map(p=>`<option value="${p.id}">${p.nom} · ${p.rol}</option>`).join('');
+$('#sel-perfil').onchange = e => { aplicarPerfil(e.target.value); };
+
+function aplicarPerfil(id, arranque){
+  perfil = PERFILES.find(p=>p.id===id) || PERFILES[0];
+  const admin = perfil.ciudad === null;
+  const vendedor = !!perfil.vend;
+
+  ciudadFiltro = admin ? 'todas' : perfil.ciudad;
+  $('#seg-tiendas').classList.toggle('oculto', !admin);
+  document.querySelectorAll('.seg button').forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.ciudad===ciudadFiltro)));
+  document.querySelectorAll('.solo-admin').forEach(el=>el.classList.toggle('oculto', !admin));
+  $('#nav-vend-txt').textContent = vendedor ? 'Mi desempeño' : 'Vendedores';
+
+  const cierra = admin
+    ? 'Cambia de usuario arriba para ver lo que ve cada tienda y cada vendedor.'
+    : vendedor
+      ? 'Responde desde aquí: el cliente ve el número de la tienda, no su celular.'
+      : 'Las reglas y los precios los define administración.';
+  $('#aviso-rol').innerHTML =
+    `<b>${perfil.nom} · ${perfil.rol}.</b> ${perfil.ve}
+     <span style="margin-left:auto;color:var(--ink2)">${cierra}</span>`;
+
+  document.querySelectorAll('#reglas .sw').forEach(b=>{ b.disabled = !admin; b.title = admin ? '' : 'Lo configura administración'; });
+  $('#nota-reglas').textContent = admin
+    ? 'Usted decide qué se prende. El cambio aplica en las dos tiendas al instante.'
+    : 'Las reglas las prende administración. Usted las ve para saber qué recibe su cliente.';
+
+  pintarTodo(); pintarReporte();
+  if(arranque) return;
+  toast('Ahora ve el sistema como ' + perfil.nom);
+}
+
+/* ---------- tablero ---------- */
+function pintarTablero(){
+  const v = visibles();
+  const sinResp = v.filter(l=>l.esp>=120).length;
+  const neg = v.filter(l=>['cotizado','visita','inicial'].includes(l.e)).length;
+  const vend = v.filter(l=>l.e==='vendido').length;
+
+  const mio = perfil.vend ? VEND.find(x=>x.n===perfil.vend) : null;
+  $('#t-hoy').textContent = mio ? v.length
+    : ciudadFiltro==='todas' ? 23 : (ciudadFiltro==='Iquitos' ? 11 : 12);
+  $('#t-sin').textContent = sinResp;
+  $('#t-neg').textContent = neg;
+  $('#t-mot').textContent = mio ? mio.motos
+    : ciudadFiltro==='todas' ? 18 : (ciudadFiltro==='Iquitos' ? 3 : 15);
+  $('#t-resp').textContent = mio ? mio.resp.replace(' min','m').replace(' h ',':')
+    : ciudadFiltro==='Pucallpa' ? '0:24' : ciudadFiltro==='Iquitos' ? '3:18' : '1:42';
+  document.querySelectorAll('#t-hoy,#t-mot').forEach(el=>{
+    const caja = el.parentElement, k = caja.querySelector('.k'), n = caja.querySelector('.n');
+    if(el.id==='t-hoy'){
+      k.textContent = mio ? 'Mis clientes activos' : 'Escribieron hoy';
+      n.textContent = mio ? 'repartidos por el sistema' : '17 desde los anuncios';
+    } else {
+      k.textContent = mio ? 'Mis motos del mes' : 'Motos del mes';
+      n.textContent = mio ? 'de '+mio.at+' clientes que atendí'
+        : ciudadFiltro==='todas' ? 'meta 43 · van 42 %' : 'meta de la tienda: 21';
+    }
+  });
+  $('#c-hoy').textContent = $('#t-hoy').textContent;
+  $('#c-sin').textContent = sinResp;
+  $('#c-emb').textContent = v.filter(l=>l.e!=='perdido').length;
+  $('#c-sin').classList.toggle('alerta', sinResp>0);
+
+  const banda = $('#banda-alerta');
+  if(sinResp===0){
+    banda.style.background='var(--verde-soft)'; banda.style.borderColor='color-mix(in srgb,var(--verde) 32%,transparent)';
+    $('#txt-alerta').style.color='var(--verde)';
+    $('#txt-alerta').textContent = 'Todo el mundo contestado. Ningún cliente esperando.';
+  } else {
+    banda.style.background='var(--rojo-soft)'; banda.style.borderColor='color-mix(in srgb,var(--rojo) 32%,transparent)';
+    $('#txt-alerta').style.color='var(--rojo)';
+    $('#txt-alerta').textContent = sinResp===1
+      ? '1 persona lleva más de 2 horas esperando respuesta.'
+      : sinResp+' personas llevan más de 2 horas esperando respuesta.';
+  }
+  const pIq = v.filter(l=>l.c==='Iquitos'  && l.esp>=120).length;
+  const pPu = v.filter(l=>l.c==='Pucallpa' && l.esp>=120).length;
+  $('#desglose-alerta').textContent = sinResp===0 ? ''
+    : perfil.vend ? 'todos suyos'
+    : perfil.ciudad ? perfil.ciudad
+    : 'Iquitos '+pIq+' · Pucallpa '+pPu;
+
+  $('#lista-recientes').innerHTML = v.slice().sort((a,b)=>b.esp-a.esp).slice(0,7).map(filaHTML).join('');
+  $('#lista-espera').innerHTML = v.slice().sort((a,b)=>b.esp-a.esp).map(filaHTML).join('')
+    || '<div class="cuerpo" style="color:var(--ink2)">No hay nadie en esta tienda con el filtro actual.</div>';
+  document.querySelectorAll('[data-lead]').forEach(f=>f.onclick=()=>abrirFicha(+f.dataset.lead));
+
+  const porC = c => LEADS.filter(l=>l.c===c);
+  $('#comparativo').innerHTML = ['Pucallpa','Iquitos'].map(c=>{
+    const ls = porC(c), pend = ls.filter(l=>l.esp>=120).length, ven = ls.filter(l=>l.e==='vendido').length;
+    const alDia = ls.length ? Math.round((ls.length-pend)/ls.length*100) : 100;
+    return `<div style="margin-bottom:13px">
+      <div style="display:flex;justify-content:space-between;align-items:baseline">
+        <b>${c}</b><span class="mono" style="font-size:12px;color:var(--ink2)">${ls.length} activos · ${ven} vendidas</span>
+      </div>
+      <div class="barra" style="margin-top:6px" title="Clientes contestados a tiempo">
+        <i class="${alDia===100?'v':alDia>=80?'a':'r'}" style="width:${alDia}%"></i></div>
+      <div style="font-size:11.5px;color:${pend?'var(--rojo)':'var(--verde)'};margin-top:4px">
+        ${alDia} % contestado ${pend? '· '+pend+' esperando' : '· al día'}</div>
+    </div>`;
+  }).join('');
+
+  const cuenta = {};
+  v.forEach(l => cuenta[l.m] = (cuenta[l.m]||0)+1);
+  const top = Object.entries(cuenta).sort((a,b)=>b[1]-a[1]).slice(0,5);
+  const max = top.length ? top[0][1] : 1;
+  $('#motos-top').innerHTML = top.map(([m,n])=>`
+    <div style="display:grid;grid-template-columns:1fr 78px 26px;gap:9px;align-items:center;margin-bottom:9px">
+      <span style="font-size:12.5px">${m}</span>
+      <span class="barra"><i class="a" style="width:${n/max*100}%"></i></span>
+      <span class="mono" style="font-size:12px;text-align:right">${n}</span>
+    </div>`).join('');
+}
+
+const filaHTML = l => `
+  <button class="fila" data-lead="${l.id}">
+    <span class="av" style="background:${colorAv(l.n)}">${ini(l.n)}</span>
+    <span class="txt">
+      <span class="nm">${l.n} <span class="pill ${l.c==='Iquitos'?'iq':'pu'}">${l.c}</span></span>
+      <span class="ms">${l.m} · ${l.chat[l.chat.length-1][1]}</span>
+    </span>
+    <span class="reloj ${claseReloj(l.esp)}">${tiempo(l.esp)}</span>
+  </button>`;
+
+/* ---------- kanban ---------- */
+function pintarTablero2(){
+  $('#tablero').innerHTML = ETAPAS.map(et=>{
+    const ls = visibles().filter(l=>l.e===et.id);
+    return `<div class="col" data-etapa="${et.id}">
+      <h3>${et.nom}<span class="n">${ls.length}</span></h3>
+      <div class="zona">${ls.map(tarjHTML).join('')}</div>
+    </div>`;
+  }).join('');
+
+  document.querySelectorAll('.tarj').forEach(t=>{
+    t.addEventListener('dragstart', e=>{ e.dataTransfer.setData('text/plain', t.dataset.id); t.classList.add('arrastrando'); });
+    t.addEventListener('dragend', ()=> t.classList.remove('arrastrando'));
+    t.addEventListener('click', ()=> abrirFicha(+t.dataset.id));
+  });
+  document.querySelectorAll('.col').forEach(c=>{
+    c.addEventListener('dragover', e=>{ e.preventDefault(); c.classList.add('sobre'); });
+    c.addEventListener('dragleave', ()=> c.classList.remove('sobre'));
+    c.addEventListener('drop', e=>{
+      e.preventDefault(); c.classList.remove('sobre');
+      mover(+e.dataTransfer.getData('text/plain'), c.dataset.etapa);
+    });
+  });
+}
+
+const tarjHTML = l => `
+  <div class="tarj" draggable="true" data-id="${l.id}">
+    <div class="l1">
+      <span class="av" style="width:22px;height:22px;font-size:10px;background:${colorAv(l.n)}">${ini(l.n)}</span>
+      <span class="nm">${l.n}</span>
+    </div>
+    <div class="mt">${l.m}</div>
+    <div class="l3">
+      <span class="pill ${l.c==='Iquitos'?'iq':'pu'}">${l.c}</span>
+      ${l.esp>=120?'<span class="pill" style="background:var(--rojo-soft);color:var(--rojo)">esperando</span>':''}
+      <span class="plata">${soles(MOTOS[l.m])}</span>
+    </div>
+  </div>`;
+
+function mover(id, etapa){
+  const l = LEADS.find(x=>x.id===id);
+  if(!l || l.e===etapa) return;
+  l.e = etapa;
+  if(etapa!=='nuevo' && l.esp>0) l.esp = 0;
+  const nom = ETAPAS.find(e=>e.id===etapa).nom;
+  if(etapa==='vendido') l.chat.push(['sis','Moto entregada · '+soles(MOTOS[l.m]), ahora()]);
+  if(etapa==='inicial') l.chat.push(['sis','Inicial recibida', ahora()]);
+  pintarTodo();
+  toast(l.n + ' → ' + nom);
+}
+
+const ahora = () => new Date().toLocaleTimeString('es-PE',{hour:'2-digit',minute:'2-digit',hour12:false});
+
+/* ---------- ficha ---------- */
+function abrirFicha(id){
+  const l = LEADS.find(x=>x.id===id); if(!l) return;
+  leadAbierto = l;
+  $('#f-av').textContent = ini(l.n); $('#f-av').style.background = colorAv(l.n);
+  $('#f-nombre').textContent = l.n; $('#f-tel').textContent = l.tel;
+  $('#f-moto').textContent = l.m; $('#f-precio').textContent = soles(MOTOS[l.m]);
+  $('#f-ciudad').textContent = 'Bajaj ' + l.c; $('#f-vend').textContent = l.v;
+  $('#f-origen').textContent = l.o;
+  $('#f-espera').textContent = tiempo(l.esp);
+  $('#f-espera').style.color = l.esp>=120 ? 'var(--rojo)' : l.esp>0 ? 'var(--ambar)' : 'var(--verde)';
+  $('#f-estado').innerHTML = ETAPAS.map(e=>`<option value="${e.id}" ${e.id===l.e?'selected':''}>${e.nom}</option>`).join('');
+  $('#f-plantillas').innerHTML = PLANTILLAS.map((p,i)=>`<button class="btn" onclick="usarPlantilla(${i})">${p.t}</button>`).join('');
+  $('#f-firma').innerHTML = 'El vendedor sigue contestando desde <b>su WhatsApp de siempre</b>. Puede responder desde aquí también: '
+    + 'es la misma conversación, con el número de Bajaj ' + l.c + ', y todo queda guardado en el servidor de Crossland.';
+  pintarChat();
+  $('#ficha').classList.add('on'); $('#velo').classList.add('on');
+  setTimeout(()=>$('#f-input').focus(), 260);
+}
+function cerrarFicha(){ $('#ficha').classList.remove('on'); $('#velo').classList.remove('on'); leadAbierto=null; }
+document.addEventListener('keydown', e=>{ if(e.key==='Escape') cerrarFicha(); });
+
+function pintarChat(){
+  const l = leadAbierto; if(!l) return;
+  $('#f-chat').innerHTML = l.chat.map(([q,t,h,orig])=>{
+    if(q==='sis') return `<div class="msg sis">${t}</div>`;
+    if(q==='cli') return `<div class="msg cli">${t}<span class="h">${h}</span></div>`;
+    const desde = orig==='crm'
+      ? '<span class="orig crm">desde el CRM</span>'
+      : '<span class="orig">📱 desde su celular</span>';
+    return `<div class="msg ven">${t}<span class="h">${h} · ${l.v.split(' ')[0]}${desde}</span></div>`;
+  }).join('');
+  const c = $('#f-chat'); c.scrollTop = c.scrollHeight;
+}
+
+function usarPlantilla(i){
+  const l = leadAbierto; if(!l) return;
+  $('#f-input').value = PLANTILLAS[i].x
+    .replace('{nombre}', l.n.split(' ')[0])
+    .replace('{ciudad}', l.c)
+    .replace('{moto}', l.m)
+    .replace('{precio}', MOTOS[l.m].toLocaleString('es-PE'));
+  $('#f-input').focus();
+}
+
+function enviarMsg(){
+  const l = leadAbierto; if(!l) return;
+  const t = $('#f-input').value.trim(); if(!t) return;
+  l.chat.push(['ven', t, ahora(), 'crm']);
+  $('#f-input').value = '';
+  const eraTarde = l.esp >= 120;
+  l.esp = 0;
+  if(l.e==='nuevo') l.e = 'contactado';
+  pintarChat(); pintarTodo();
+  $('#f-espera').textContent='contestado'; $('#f-espera').style.color='var(--verde)';
+  $('#f-estado').value = l.e;
+  toast(eraTarde ? 'Respondido. Sale de la lista de espera.' : 'Mensaje enviado a ' + l.n.split(' ')[0]);
+  setTimeout(()=>{
+    if(leadAbierto && leadAbierto.id===l.id && Math.random()>.35){
+      l.chat.push(['cli','Ya, cuéntame más 👀', ahora()]);
+      pintarChat();
+    }
+  }, 1900);
+}
+$('#f-input').addEventListener('keydown', e=>{ if(e.key==='Enter') enviarMsg(); });
+
+function moverDesdeFicha(e){ if(leadAbierto) mover(leadAbierto.id, e); }
+function marcarPerdido(){
+  const l = leadAbierto; if(!l) return;
+  LEADS = LEADS.filter(x=>x.id!==l.id);
+  cerrarFicha(); pintarTodo();
+  toast(l.n + ' marcado como perdido · queda el motivo en el reporte');
+}
+
+/* ---------- vendedores, reglas, plantillas, motivos ---------- */
+function pintarVendedores(){
+  const vs = VEND.filter(v=>(ciudadFiltro==='todas' || v.c===ciudadFiltro) && (!perfil.vend || v.n===perfil.vend));
+  $('#tit-vendedores').textContent = perfil.vend ? 'Mi mes' : 'Ranking del mes';
+  $('#cab-vendedores').innerHTML = perfil.vend
+    ? '<div><h1>Cómo voy este mes</h1><p>Sus números, solo suyos. El tiempo de respuesta es lo que más mueve la aguja: quien contesta en minutos cierra hasta 4 veces más.</p></div>'
+    : '<div><h1>Quién cierra y quién no</h1><p>El mismo anuncio, el mismo precio, la misma moto. Lo único que cambia es quién atiende. Esto es lo que hoy nadie puede ver.</p></div>';
+  const max = Math.max(...vs.map(v=>v.cierre));
+  $('#tb-vendedores').innerHTML = vs.map(v=>`
+    <tr>
+      <td><span style="display:flex;align-items:center;gap:9px">
+        <span class="av" style="width:26px;height:26px;font-size:11px;background:${colorAv(v.n)}">${ini(v.n)}</span>
+        <b>${v.n}</b></span></td>
+      <td><span class="pill ${v.c==='Iquitos'?'iq':'pu'}">${v.c}</span></td>
+      <td class="num">${v.at}</td>
+      <td class="num" style="color:${v.resp.includes('h')?'var(--rojo)':'var(--verde)'}">${v.resp}</td>
+      <td class="num">${v.motos}</td>
+      <td class="num">${v.cierre.toFixed(1)} %</td>
+      <td><span class="barra"><i class="${v.cierre>=1.8?'v':v.cierre>=1?'a':'r'}" style="width:${v.cierre/max*100}%"></i></span></td>
+    </tr>`).join('');
+}
+
+function pintarReglas(){
+  $('#reglas').innerHTML = REGLAS.map((r,i)=>`
+    <div class="regla">
+      <div class="tx"><b>${r.t}</b><p>${r.d}</p></div>
+      <button class="sw" aria-pressed="${r.on}" aria-label="Prender o apagar" onclick="toggleRegla(${i},this)"></button>
+    </div>`).join('');
+  $('#plantillas-lista').innerHTML = PLANTILLAS.map(p=>`
+    <div style="border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--panel2)">
+      <div class="eyebrow">${p.t}</div>
+      <div style="font-size:12.5px;margin-top:5px;color:var(--ink2)">${p.x}</div>
+    </div>`).join('');
+}
+function toggleRegla(i, btn){
+  REGLAS[i].on = !REGLAS[i].on;
+  btn.setAttribute('aria-pressed', String(REGLAS[i].on));
+  toast(REGLAS[i].on ? 'Regla activada' : 'Regla apagada');
+}
+
+function pintarMotivos(){
+  const max = MOTIVOS[0][1];
+  $('#motivos').innerHTML = MOTIVOS.map(([m,n])=>`
+    <div style="display:grid;grid-template-columns:230px 1fr 46px;gap:12px;align-items:center;margin-bottom:10px">
+      <span style="font-size:13px">${m}</span>
+      <span class="barra" style="height:9px"><i class="${m.includes('contestaron')?'r':'a'}" style="width:${n/max*100}%"></i></span>
+      <span class="mono" style="font-size:12.5px;text-align:right">${n} %</span>
+    </div>`).join('') +
+    `<p class="nota" style="margin-top:12px;border-left-color:var(--rojo)">
+      <b>27 de cada 100 que no compraron se perdieron por demora, no por precio.</b> Ese es el pedazo que el Centro de Ventas ataca desde el primer día.</p>`;
+}
+
+/* ---------- reporte del mes: la central ve todo, la tienda ve lo suyo ---------- */
+function pintarReporte(){
+  const admin = perfil.ciudad === null;
+  const d = admin ? AGOSTO.total : AGOSTO[perfil.ciudad];
+
+  if(perfil.vend){
+    const m = VEND.find(x=>x.n===perfil.vend);
+    const contestados = Math.round(m.at * (m.resp.includes('h') ? .42 : .88));
+    $('#tiles-reporte').innerHTML = `
+      <div class="tile"><div class="k">Clientes que me tocaron</div><div class="v">${m.at}</div><div class="n">en agosto</div></div>
+      <div class="tile ${m.resp.includes('h')?'mal':'ok'}"><div class="k">Mi tiempo de respuesta</div><div class="v" style="font-size:29px">${m.resp}</div><div class="n">la meta son 15 minutos</div></div>
+      <div class="tile ${m.motos>=5?'ok':'ojo'}"><div class="k">Motos que vendí</div><div class="v">${m.motos}</div><div class="n">${m.cierre.toFixed(1)} % de los míos</div></div>
+      <div class="tile"><div class="k">Si contestara en 15 min</div><div class="v">${Math.round(m.at*0.033)}</div><div class="n">motos al mes, con los mismos clientes</div></div>`;
+    $('#et-embudo').textContent = 'agosto 2026 · ' + m.n;
+    $('#cuerpo-embudo').innerHTML = `
+      <div class="embudo">
+        <div class="paso"><span class="et">Me escribieron</span><span class="tr"><i style="width:100%"></i></span><span class="vl">${m.at}</span></div>
+        <div class="paso"><span class="et">Contesté a tiempo</span><span class="tr"><i style="width:${Math.round(contestados/m.at*100)}%"></i></span><span class="vl">${contestados}</span></div>
+        <div class="paso fin"><span class="et">Compraron</span><span class="tr"><i style="width:${Math.max(2,m.cierre*8)}%"></i></span><span class="vl">${m.motos}</span></div>
+      </div>
+      <p class="nota" style="margin-top:14px">Con los mismos clientes que ya le tocaron, contestar en 15 minutos le daría
+        <b>${Math.round(m.at*0.033) - m.motos} motos más al mes</b>. No es vender más: es contestar primero.</p>`;
+    return;
+  }
+
+  $('#tiles-reporte').innerHTML = admin ? `
+    <div class="tile"><div class="k">Invertido en anuncios</div><div class="v">${AGOSTO.total.inv}</div><div class="n">26 días de pauta</div></div>
+    <div class="tile"><div class="k">Conversaciones</div><div class="v">1.434</div><div class="n">S/ 1,05 cada una</div></div>
+    <div class="tile mal"><div class="k">Motos cerradas</div><div class="v">18</div><div class="n">1,3 % de las conversaciones</div></div>
+    <div class="tile ojo"><div class="k">Motos que se dejaron ir</div><div class="v">~25</div><div class="n">al mes, solo por no cerrar al 3 %</div></div>`
+  : `
+    <div class="tile"><div class="k">Conversaciones de ${perfil.ciudad}</div><div class="v">${d.conv}</div><div class="n">llegaron por los anuncios</div></div>
+    <div class="tile ${d.motos>=10?'ok':'mal'}"><div class="k">Motos cerradas</div><div class="v">${d.motos}</div><div class="n">${d.cierre} de las conversaciones</div></div>
+    <div class="tile ojo"><div class="k">Se dejaron ir</div><div class="v">${d.perdidas}</div><div class="n">si cerrara al 3 %, la meta alcanzable</div></div>
+    <div class="tile"><div class="k">Inversión en anuncios</div><div class="v" style="font-size:19px;padding-top:9px">La maneja<br>administración</div><div class="n">&nbsp;</div></div>`;
+
+  $('#et-embudo').textContent = admin ? 'agosto 2026 · las 2 tiendas' : 'agosto 2026 · ' + perfil.ciudad;
+
+  $('#cuerpo-embudo').innerHTML = admin ? `
+    <div class="embudo">
+      <div class="paso"><span class="et">Vieron el anuncio</span><span class="tr"><i style="width:100%"></i></span><span class="vl">443.000</span></div>
+      <div class="paso"><span class="et">Le dieron clic</span><span class="tr"><i style="width:31%"></i></span><span class="vl">9.200</span></div>
+      <div class="paso"><span class="et">Abrieron WhatsApp</span><span class="tr"><i style="width:19%"></i></span><span class="vl">2.800</span></div>
+      <div class="paso"><span class="et">Escribieron</span><span class="tr"><i style="width:12%"></i></span><span class="vl">1.434</span></div>
+      <div class="paso fin"><span class="et">Compraron la moto</span><span class="tr"><i style="width:2%"></i></span><span class="vl">18</span></div>
+    </div>
+    <p class="nota" style="margin-top:14px">Hasta “escribieron” todo funciona: la pauta trae 1.434 personas a S/ 1,05.
+      <b>El escalón que se rompe es el último</b>, y ese escalón es la atención, no el anuncio.</p>`
+  : `
+    <div class="embudo">
+      <div class="paso"><span class="et">Escribieron a ${perfil.ciudad}</span><span class="tr"><i style="width:100%"></i></span><span class="vl">${d.conv}</span></div>
+      <div class="paso"><span class="et">Contestados a tiempo</span><span class="tr"><i style="width:${perfil.ciudad==='Iquitos'?42:81}%"></i></span><span class="vl">${Math.round(d.conv*(perfil.ciudad==='Iquitos'?.42:.81))}</span></div>
+      <div class="paso fin"><span class="et">Compraron la moto</span><span class="tr"><i style="width:${Math.max(2,d.motos/d.conv*100*8)}%"></i></span><span class="vl">${d.motos}</span></div>
+    </div>
+    <p class="nota" style="margin-top:14px">De cada 100 personas que escribieron a ${perfil.ciudad}, compraron <b>${d.cierre.replace(' %','')}</b>.
+      La meta de Crossland es 3 de cada 100: eso son <b>${d.perdidas} motos más al mes</b> con la misma publicidad.</p>`;
+}
+
+function pintarTodo(){ pintarTablero(); pintarTablero2(); pintarVendedores(); }
+
+pintarReglas(); pintarMotivos(); aplicarPerfil('admin', true);
+
+/* un lead entra solo, para mostrar que llega desde la pauta */
+setTimeout(()=>{
+  const nuevo = {id:99, n:'Rider Ushiñahua', tel:'+51 907 *** 731', c:'Pucallpa', m:'Pulsar NS 160',
+    e:'nuevo', v:'Milagros Tuesta', esp:1, o:'Anuncio · NS 160 (recién ahora)',
+    chat:[['cli','Buenas, acabo de ver el anuncio de la NS 160 🏍️', ahora()]]};
+  LEADS.unshift(nuevo);
+  pintarTodo();
+  if(ciudadFiltro==='todas' || ciudadFiltro==='Pucallpa')
+    toast('Entró un cliente nuevo desde el anuncio: Rider Ushiñahua · Pucallpa');
+}, 14000);
+</script>
+</body>
+</html>
