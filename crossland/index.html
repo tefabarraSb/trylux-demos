@@ -366,6 +366,10 @@ td.num{font-family:"JetBrains Mono",monospace; font-variant-numeric:tabular-nums
   font-size:13px; background:var(--surface2); color:var(--text); transition:border-color .15s;
 }
 .form input:focus,.form select:focus{outline:none; border-color:var(--accent)}
+.valores{display:flex; flex-direction:column; gap:9px; margin-top:14px; padding-top:14px; border-top:1px solid var(--line)}
+.valores div{display:grid; grid-template-columns:110px 1fr; gap:10px; align-items:baseline}
+.valores b{font-size:11.5px; font-weight:600; color:var(--text2)}
+.valores span{font-size:12px; color:var(--text3); line-height:1.5}
 .soltar{
   border:1.5px dashed var(--line2); border-radius:var(--r-lg); padding:26px 18px; text-align:center;
   color:var(--text3); cursor:pointer; transition:border-color .15s,background .15s;
@@ -689,7 +693,13 @@ td.num{font-family:"JetBrains Mono",monospace; font-variant-numeric:tabular-nums
       </div>
       <div class="cols2">
         <div class="caja">
-          <header><h2>1 · La plantilla</h2><span class="der">siempre las mismas columnas</span></header>
+          <header>
+            <h2>1 · La plantilla</h2>
+            <button class="btn pri sm" style="margin-left:auto" onclick="bajarPlantilla()">
+              <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v8M4.5 6.5 8 10l3.5-3.5"/><path d="M2.5 12v1.5h11V12"/></svg>
+              Descargar plantilla
+            </button>
+          </header>
           <div class="cuerpo">
             <div style="overflow-x:auto">
               <table>
@@ -702,6 +712,11 @@ td.num{font-family:"JetBrains Mono",monospace; font-variant-numeric:tabular-nums
               </table>
             </div>
             <p class="nota" style="margin-top:14px">Si una fila viene incompleta o el teléfono ya existe, el sistema lo avisa antes de cargar — no entra basura ni se duplica un cliente.</p>
+            <div class="valores">
+              <div><b>Punto de venta</b><span>Iquitos Centro · Pucallpa Centro · Pucallpa Sur · Tarapoto · Norcentro</span></div>
+              <div><b>Origen</b><span>Llegó a la tienda · Llamada telefónica · Acción comercial · Distribuidor</span></div>
+              <div><b>Detalle</b><span>Volanteo · Test ride · Activación · Exhibición · Feria</span></div>
+            </div>
           </div>
         </div>
         <div style="display:flex; flex-direction:column; gap:14px">
@@ -1423,6 +1438,26 @@ function guardarNuevo(){
   });
   cerrarNuevo(); pintarTodo(); pintarOrigen();
   toast(nom + ' quedó registrado y ya está en el embudo');
+}
+
+/* ---- descargar la plantilla ---- */
+function bajarPlantilla(){
+  const filas = [
+    ['Nombre','Celular','Modelo','Punto de venta','Origen','Detalle'],
+    ['Wilson Amasifuén','942318745','Boxer 150','Tarapoto','Acción comercial','Activación'],
+    ['Nancy Vargas','918707231','Pulsar NS160','Norcentro','Distribuidor','Venta reportada'],
+    ['Luis Pinedo','965412880','Dominar 250','Pucallpa Sur','Acción comercial','Test ride'],
+    ['','','','','',''],
+    ['← Borre las 3 filas de ejemplo y escriba las suyas debajo del encabezado','','','','','']
+  ];
+  const csv = filas.map(f => f.map(c => '"' + String(c).replace(/"/g,'""') + '"').join(';')).join('\r\n');
+  const blob = new Blob(['\uFEFF' + csv], {type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'Plantilla-prospectos-Bajaj-Selva.csv';
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+  toast('Plantilla descargada · se abre directo en Excel');
 }
 
 /* ---- carga en lote desde plantilla ---- */
