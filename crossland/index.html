@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <title>Centro de Ventas Crossland</title>
-<meta name="description" content="Centro de Ventas Crossland — demostración interactiva del CRM para Bajaj Iquitos y Pucallpa.">
+<meta name="description" content="Centro de Ventas Crossland — demostración interactiva del CRM para Bajaj Selva.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏍️</text></svg>">
 <style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
@@ -359,6 +359,24 @@ td.num{font-family:"JetBrains Mono",monospace; font-variant-numeric:tabular-nums
   color:var(--text2); font-size:13.5px;
 }
 .nota.fuerte b{color:var(--accent)}
+.form{padding:16px; display:flex; flex-direction:column; gap:13px; overflow-y:auto; flex:1}
+.form label{display:flex; flex-direction:column; gap:5px; font-size:12px; font-weight:500; color:var(--text2)}
+.form input,.form select{
+  border:1px solid var(--line2); border-radius:var(--r); padding:9px 11px; font-family:inherit;
+  font-size:13px; background:var(--surface2); color:var(--text); transition:border-color .15s;
+}
+.form input:focus,.form select:focus{outline:none; border-color:var(--accent)}
+.soltar{
+  border:1.5px dashed var(--line2); border-radius:var(--r-lg); padding:26px 18px; text-align:center;
+  color:var(--text3); cursor:pointer; transition:border-color .15s,background .15s;
+  display:flex; flex-direction:column; align-items:center; gap:6px;
+}
+.soltar:hover{border-color:var(--accent); background:var(--accent-soft); color:var(--accent)}
+.soltar b{font-size:13px; color:var(--text)}
+.soltar span{font-size:12px}
+.canal{display:grid; grid-template-columns:150px 1fr 42px; gap:11px; align-items:center; margin-bottom:10px}
+.canal .et{font-size:12.5px}
+.canal .et small{display:block; color:var(--text3); font-size:11px}
 .ajustes{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);
   border:1px solid var(--line); border-radius:var(--r); overflow:hidden}
 .aj{background:var(--surface); padding:13px 14px}
@@ -410,7 +428,7 @@ td.num{font-family:"JetBrains Mono",monospace; font-variant-numeric:tabular-nums
       <span class="mark">trylux</span>
       <span>
         <span class="name">Centro de Ventas</span>
-        <span class="sub">· Crossland · Bajaj Iquitos & Pucallpa</span>
+        <span class="sub">· Crossland · Bajaj Selva</span>
       </span>
     </div>
     <button class="buscador" onclick="toast('El buscador encuentra clientes, motos y vendedores en toda la operación.')">
@@ -423,9 +441,10 @@ td.num{font-family:"JetBrains Mono",monospace; font-variant-numeric:tabular-nums
       <select id="sel-perfil" aria-label="Cambiar de usuario"></select>
     </label>
     <div class="seg" id="seg-tiendas" role="group" aria-label="Filtrar por tienda">
-      <button data-ciudad="todas" aria-pressed="true">Las 2 tiendas</button>
+      <button data-ciudad="todas" aria-pressed="true">Toda la Selva</button>
       <button data-ciudad="Iquitos" aria-pressed="false">Iquitos</button>
       <button data-ciudad="Pucallpa" aria-pressed="false">Pucallpa</button>
+      <button data-ciudad="Tarapoto" aria-pressed="false">Tarapoto</button>
     </div>
     <span class="chip-demo"><span class="dot"></span> Demostración · datos de ejemplo</span>
   </div>
@@ -436,6 +455,8 @@ td.num{font-family:"JetBrains Mono",monospace; font-variant-numeric:tabular-nums
     <button class="nav" data-vista="bandeja"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 8h3l1.5 3 2-6 1.5 3h3"/></svg></span> Sin responder <span class="cnt alerta" id="c-sin">4</span></button>
     <button class="nav" data-vista="embudo"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="3.2" height="10" rx="1"/><rect x="6.4" y="3" width="3.2" height="7" rx="1"/><rect x="10.8" y="3" width="3.2" height="9" rx="1"/></svg></span> Embudo <span class="cnt" id="c-emb">16</span></button>
     <div class="grp eyebrow">Control</div>
+    <button class="nav" data-vista="origen"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1.5v13M3 6l5-4.5L13 6"/><circle cx="8" cy="11.5" r="2.5"/></svg></span> De dónde llegan</button>
+    <button class="nav" data-vista="cargar"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 2.5h7l3 3v8H3z"/><path d="M6 8.5h4M6 11h4"/></svg></span> Cargar lista</button>
     <button class="nav" data-vista="vendedores"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5.5" r="2.5"/><path d="M3 13.5c0-2.5 2.2-4 5-4s5 1.5 5 4"/></svg></span> <span id="nav-vend-txt">Vendedores</span></button>
     <button class="nav" data-vista="seguimiento"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 8a5.5 5.5 0 1 1-1.8-4.1"/><path d="M13.5 2v3h-3"/></svg></span> Seguimiento</button>
     <button class="nav" data-vista="reporte"><span class="ico"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 13V9M6.3 13V4M9.7 13V7M13 13V2.5"/></svg></span> Reporte del mes</button>
@@ -634,6 +655,77 @@ td.num{font-family:"JetBrains Mono",monospace; font-variant-numeric:tabular-nums
       </div>
     </section>
 
+
+    <!-- ============ DE DÓNDE LLEGAN ============ -->
+    <section class="vista" id="v-origen">
+      <div class="cab">
+        <div>
+          <h1>De dónde llega cada cliente</h1>
+          <p>No todos entran por los anuncios. El que llega a la tienda, el que llama por teléfono y el que se inscribe en una activación se registran aquí igual — y se miden con la misma vara.</p>
+        </div>
+        <button class="btn pri" style="margin-left:auto" onclick="abrirNuevo()">+ Nuevo prospecto</button>
+      </div>
+      <div class="tiles" style="grid-template-columns:repeat(5,1fr)" id="tiles-origen"></div>
+      <div class="cols2">
+        <div class="caja">
+          <header><h2>Prospectos por canal</h2><span class="der">este mes</span></header>
+          <div class="cuerpo" id="canales"></div>
+        </div>
+        <div class="caja">
+          <header><h2>Acciones comerciales</h2><span class="der">subcategoría</span></header>
+          <div class="cuerpo" id="acciones-com"></div>
+        </div>
+      </div>
+      <p class="nota" style="margin-top:14px"><b>Lo que entra por anuncio se registra solo.</b> Lo demás lo registra el vendedor en 30 segundos, o se sube en lote desde una plantilla. Todo cae al mismo embudo y a los mismos reportes.</p>
+    </section>
+
+    <!-- ============ CARGAR LISTA ============ -->
+    <section class="vista" id="v-cargar">
+      <div class="cab">
+        <div>
+          <h1>Subir una lista completa</h1>
+          <p>Después de un test ride o de una feria no hay que teclear uno por uno. Se descarga la plantilla, se pega la lista y entra todo de una vez — igual que el Excel semanal que mandan los distribuidores.</p>
+        </div>
+      </div>
+      <div class="cols2">
+        <div class="caja">
+          <header><h2>1 · La plantilla</h2><span class="der">siempre las mismas columnas</span></header>
+          <div class="cuerpo">
+            <div style="overflow-x:auto">
+              <table>
+                <thead><tr><th>Nombre</th><th>Celular</th><th>Modelo</th><th>Punto de venta</th><th>Origen</th><th>Detalle</th></tr></thead>
+                <tbody>
+                  <tr><td>Wilson Amasifuén</td><td class="num">942318</td><td>Boxer 150</td><td>Tarapoto</td><td>Acción comercial</td><td>Activación</td></tr>
+                  <tr><td>Nancy Vargas</td><td class="num">918707</td><td>Pulsar NS160</td><td>Norcentro</td><td>Distribuidor</td><td>Derivado</td></tr>
+                  <tr><td>Luis Pinedo</td><td class="num">965412</td><td>Dominar 250</td><td>Pucallpa Sur</td><td>Acción comercial</td><td>Test ride</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="nota" style="margin-top:14px">Si una fila viene incompleta o el teléfono ya existe, el sistema lo avisa antes de cargar — no entra basura ni se duplica un cliente.</p>
+          </div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:14px">
+          <div class="caja">
+            <header><h2>2 · Se sube</h2></header>
+            <div class="cuerpo">
+              <div class="soltar" onclick="simularCarga()">
+                <svg width="26" height="26" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8 10.5V2.5M4.5 6 8 2.5 11.5 6"/><path d="M2.5 11v2.5h11V11"/></svg>
+                <b>Arrastre aquí su archivo de Excel</b>
+                <span>o toque para elegirlo · .xlsx y .csv</span>
+              </div>
+              <p id="res-carga" style="margin:12px 0 0; font-size:12.5px; color:var(--text3)">Toque el recuadro para ver cómo entra una lista.</p>
+            </div>
+          </div>
+          <div class="caja">
+            <header><h2>3 · Ya están adentro</h2></header>
+            <div class="cuerpo" style="font-size:13px; color:var(--text2)">
+              Cada fila entra al embudo como un prospecto más: se reparte entre los vendedores, arranca su reloj de respuesta y cuenta en los reportes de la tienda.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ============ PARA ACTIVARLO ============ -->
     <section class="vista" id="v-activar">
       <div class="cab">
@@ -761,21 +853,65 @@ td.num{font-family:"JetBrains Mono",monospace; font-variant-numeric:tabular-nums
   </div>
 </aside>
 
+
+<div class="velo" id="velo2" onclick="cerrarNuevo()"></div>
+<aside class="ficha" id="panel-nuevo" aria-label="Nuevo prospecto">
+  <header>
+    <span>
+      <div style="font-weight:600">Nuevo prospecto</div>
+      <div style="font-size:11.5px; color:var(--text3)">Para el que llegó a la tienda, llamó o vino de una activación</div>
+    </span>
+    <button class="x" onclick="cerrarNuevo()" aria-label="Cerrar">✕</button>
+  </header>
+  <div class="form">
+    <label>Nombre del cliente<input id="nv-nom" placeholder="Ej. Luis Pinedo" autocomplete="off"></label>
+    <label>Celular<input id="nv-tel" placeholder="9XX XXX XXX" autocomplete="off"></label>
+    <label>Moto de interés<select id="nv-moto"></select></label>
+    <label>Punto de venta<select id="nv-pv"></select></label>
+    <label>¿De dónde llegó?<select id="nv-org" onchange="subOrigen()"></select></label>
+    <label id="nv-sub-w">Detalle<select id="nv-sub"></select></label>
+  </div>
+  <div class="acciones">
+    <button class="btn pri" onclick="guardarNuevo()">Guardar prospecto</button>
+    <button class="btn" onclick="cerrarNuevo()">Cancelar</button>
+    <span style="font-size:11.5px; color:var(--text3); margin-left:auto">30 segundos</span>
+  </div>
+</aside>
+
 <div class="toast" id="toast"></div>
 
 <script>
 const ETAPAS = [
-  {id:'nuevo',      nom:'Nuevo'},
+  {id:'nuevo',      nom:'Contacto inicial'},
   {id:'contactado', nom:'Contactado'},
-  {id:'cotizado',   nom:'Cotizado'},
-  {id:'visita',     nom:'Visita en tienda'},
-  {id:'inicial',    nom:'Dio inicial'},
+  {id:'visita',     nom:'Prueba de manejo'},
+  {id:'cotizado',   nom:'Cotización / Crédito'},
+  {id:'inicial',    nom:'Separación'},
   {id:'vendido',    nom:'Moto entregada'}
 ];
 
+/* puntos de venta reales de la operación Selva */
+const PUNTOS = [
+  {id:'iq-centro', nom:'Iquitos Centro',    ciudad:'Iquitos',   tipo:'tienda'},
+  {id:'pu-centro', nom:'Pucallpa Centro',   ciudad:'Pucallpa',  tipo:'tienda'},
+  {id:'pu-sur',    nom:'Pucallpa Sur',      ciudad:'Pucallpa',  tipo:'tienda'},
+  {id:'tarapoto',  nom:'Tarapoto',          ciudad:'Tarapoto',  tipo:'tienda'},
+  {id:'norcentro', nom:'Norcentro',         ciudad:'Tarapoto',  tipo:'distribuidor'}
+];
+
+/* de dónde llegó el cliente — con subcategoría */
+const ORIGENES = {
+  pauta:       {nom:'Anuncio',            auto:true,  subs:[]},
+  tienda:      {nom:'Llegó a la tienda',  auto:false, subs:[]},
+  llamada:     {nom:'Llamada telefónica', auto:false, subs:[]},
+  accion:      {nom:'Acción comercial',   auto:false, subs:['Volanteo','Test ride','Activación','Exhibición','Feria']},
+  distribuidor:{nom:'Distribuidor',       auto:false, subs:['Venta reportada','Prospecto derivado']}
+};
+
 const MOTOS = {
-  'Boxer CT 100':4290, 'Platina 100':4590, 'Discover 125':5990,
-  'Pulsar NS 160':8990, 'Pulsar N160':9790, 'Pulsar NS 200':10990, 'Dominar 400':17900
+  'Boxer 150':4790, 'Boxer BM150':5190, 'Discover 125':5990,
+  'Pulsar NS160':8990, 'Pulsar N160':9790, 'Pulsar NS200':10990,
+  'Pulsar 220F':11990, 'Dominar 250':14900, 'Dominar 400':17900
 };
 
 const VEND = [
@@ -783,41 +919,47 @@ const VEND = [
   {n:'Jhon Vásquez',    c:'Pucallpa', at:331, resp:'21 min', motos:6, cierre:1.8},
   {n:'Carlos Shapiama', c:'Pucallpa', at:306, resp:'47 min', motos:2, cierre:0.7},
   {n:'Rosa Panduro',    c:'Iquitos',  at:298, resp:'2 h 10', motos:2, cierre:0.7},
-  {n:'Elmer Ríos',      c:'Iquitos',  at:285, resp:'5 h 30', motos:1, cierre:0.4}
+  {n:'Elmer Ríos',      c:'Iquitos',  at:285, resp:'5 h 30', motos:1, cierre:0.4},
+  {n:'Equipo Tarapoto', c:'Tarapoto', at:96,  resp:'34 min', motos:4, cierre:4.2},
+  {n:'Norcentro',       c:'Tarapoto', at:41,  resp:'—',      motos:6, cierre:14.6}
 ];
 
 let LEADS = [
-  {id:1,  n:'Jhonatan Pinedo',   tel:'+51 965 ***  412', c:'Iquitos',  m:'Pulsar NS 160', e:'nuevo', v:'Rosa Panduro',    esp:220, o:'Anuncio · Pulsar NS 160',
+  {id:17, n:'Wilson Amasifuén',  tel:'+51 942 *** 318', pv:'tarapoto', org:{t:'accion',s:'Activación'}, c:'Tarapoto', m:'Boxer 150', e:'contactado', v:'Equipo Tarapoto', esp:35, o:'Activación · plaza de armas',
+   chat:[['cli','Me inscribí en la activación del sábado','11:20'],['ven','¡Hola Wilson! Te separo una Boxer para la prueba del sábado','11:52','crm']]},
+  {id:18, n:'Nancy Vargas',      tel:'+51 918 *** 707', pv:'norcentro', org:{t:'distribuidor',s:'Prospecto derivado'}, c:'Tarapoto', m:'Pulsar NS160', e:'cotizado', v:'Norcentro', esp:14, o:'Norcentro · derivado',
+   chat:[['sis','Prospecto cargado desde la plantilla de Norcentro','09:15']]},
+  {id:1,  n:'Jhonatan Pinedo',   tel:'+51 965 ***  412', pv:'iq-centro', org:{t:'pauta'}, c:'Iquitos',  m:'Pulsar NS160', e:'nuevo', v:'Rosa Panduro',    esp:220, o:'Anuncio · Pulsar NS160',
    chat:[['cli','Buenas, vi el anuncio de la NS 160. ¿Cuánto es la inicial?','14:02'],['cli','¿Hola?','15:20']]},
-  {id:2,  n:'Milagros Sangama',  tel:'+51 942 *** 077', c:'Iquitos',  m:'Boxer CT 100',  e:'nuevo', v:'Elmer Ríos',      esp:145, o:'Anuncio · Boxer trabajo',
+  {id:2,  n:'Milagros Sangama',  tel:'+51 942 *** 077', pv:'iq-centro', org:{t:'pauta'}, c:'Iquitos',  m:'Boxer 150',  e:'nuevo', v:'Elmer Ríos',      esp:145, o:'Anuncio · Boxer trabajo',
    chat:[['cli','Quiero la Boxer para trabajar, ¿dan crédito sin inicial?','15:12']]},
-  {id:3,  n:'Óscar Tapullima',   tel:'+51 961 *** 338', c:'Pucallpa', m:'Pulsar N160',   e:'nuevo', v:'Jhon Vásquez',    esp:132, o:'Anuncio · N160',
+  {id:3,  n:'Óscar Tapullima',   tel:'+51 961 *** 338', pv:'pu-centro', org:{t:'pauta'}, c:'Pucallpa', m:'Pulsar N160',   e:'nuevo', v:'Jhon Vásquez',    esp:132, o:'Anuncio · N160',
    chat:[['cli','Hermano buenas, la N160 azul ¿la tienen en tienda?','15:41']]},
-  {id:4,  n:'Rosa Isuiza',       tel:'+51 986 *** 501', c:'Iquitos',  m:'Platina 100',   e:'nuevo', v:'Rosa Panduro',    esp:96,  o:'Anuncio · Platina',
+  {id:4,  n:'Rosa Isuiza',       tel:'+51 986 *** 501', pv:'iq-centro', org:{t:'llamada'}, c:'Iquitos',  m:'Boxer BM150',   e:'nuevo', v:'Rosa Panduro',    esp:96,  o:'Anuncio · Platina',
    chat:[['cli','Buenas tardes, información de la Platina por favor','16:18']]},
-  {id:5,  n:'Wilder Macedo',     tel:'+51 973 *** 244', c:'Pucallpa', m:'Pulsar NS 200', e:'contactado', v:'Milagros Tuesta', esp:12, o:'Anuncio · NS 200',
+  {id:5,  n:'Wilder Macedo',     tel:'+51 973 *** 244', pv:'pu-sur', org:{t:'pauta'}, c:'Pucallpa', m:'Pulsar NS200', e:'contactado', v:'Milagros Tuesta', esp:12, o:'Anuncio · NS 200',
    chat:[['cli','¿La NS 200 sigue en promoción?','13:30'],['ven','¡Hola Wilder! Sí, hasta el domingo. Te queda en S/ 10.990 con casco de regalo 🏍️','13:34','movil'],['cli','Ah ya, ¿y con cuánto salgo?','13:51']]},
-  {id:6,  n:'Karina Amasifuén',  tel:'+51 954 *** 190', c:'Pucallpa', m:'Discover 125',  e:'contactado', v:'Jhon Vásquez', esp:28, o:'Anuncio · Discover',
+  {id:6,  n:'Karina Amasifuén',  tel:'+51 954 *** 190', pv:'pu-centro', org:{t:'pauta'}, c:'Pucallpa', m:'Discover 125',  e:'contactado', v:'Jhon Vásquez', esp:28, o:'Anuncio · Discover',
    chat:[['cli','Buenas, la Discover 125 ¿cuánto de inicial?','12:05'],['ven','Hola Karina, con S/ 900 de inicial ya te la llevas. ¿Es para ti o para tu esposo?','12:19','movil'],['cli','Para mí, trabajo en delivery','12:44']]},
-  {id:7,  n:'Segundo Vela',      tel:'+51 940 *** 763', c:'Iquitos',  m:'Boxer CT 100',  e:'contactado', v:'Elmer Ríos',  esp:55, o:'Anuncio · Boxer trabajo',
-   chat:[['cli','Necesito una moto para mototaxi','10:11'],['ven','Buen día don Segundo, la Boxer CT 100 es la que más sale para eso. S/ 4.290','11:40']]},
-  {id:8,  n:'Yanira Cachique',   tel:'+51 928 *** 615', c:'Pucallpa', m:'Pulsar N160',   e:'cotizado', v:'Milagros Tuesta', esp:6, o:'Anuncio · N160',
+  {id:7,  n:'Segundo Vela',      tel:'+51 940 *** 763', pv:'iq-centro', org:{t:'tienda'}, c:'Iquitos',  m:'Boxer 150',  e:'contactado', v:'Elmer Ríos',  esp:55, o:'Anuncio · Boxer trabajo',
+   chat:[['cli','Necesito una moto para mototaxi','10:11'],['ven','Buen día don Segundo, la Boxer 150 es la que más sale para eso. S/ 4.290','11:40']]},
+  {id:8,  n:'Yanira Cachique',   tel:'+51 928 *** 615', pv:'pu-sur', org:{t:'pauta'}, c:'Pucallpa', m:'Pulsar N160',   e:'cotizado', v:'Milagros Tuesta', esp:6, o:'Anuncio · N160',
    chat:[['cli','Quiero la N160','09:02'],['ven','Hola Yanira 😊 Te paso la cotización: S/ 9.790 al contado, o S/ 1.500 de inicial y 18 cuotas de S/ 545. Incluye casco y SOAT','09:08','crm'],['cli','Ya, lo converso con mi esposo y te aviso','09:31']]},
-  {id:9,  n:'Elvis Saavedra',    tel:'+51 916 *** 458', c:'Pucallpa', m:'Dominar 400',   e:'cotizado', v:'Jhon Vásquez', esp:18, o:'Anuncio · Dominar',
+  {id:9,  n:'Elvis Saavedra',    tel:'+51 916 *** 458', pv:'pu-centro', org:{t:'accion',s:'Test ride'}, c:'Pucallpa', m:'Dominar 400',   e:'cotizado', v:'Jhon Vásquez', esp:18, o:'Anuncio · Dominar',
    chat:[['cli','La Dominar 400, ¿precio final?','08:20'],['ven','S/ 17.900 con top case. ¿Vienes a verla hoy?','08:35'],['cli','El sábado paso','08:52']]},
-  {id:10, n:'Ruth Navarro',      tel:'+51 995 *** 226', c:'Iquitos',  m:'Platina 100',   e:'cotizado', v:'Rosa Panduro', esp:41, o:'Anuncio · Platina',
+  {id:10, n:'Ruth Navarro',      tel:'+51 995 *** 226', pv:'iq-centro', org:{t:'pauta'}, c:'Iquitos',  m:'Boxer BM150',   e:'cotizado', v:'Rosa Panduro', esp:41, o:'Anuncio · Platina',
    chat:[['cli','¿La Platina en cuotas?','11:15'],['ven','Sí Ruth, S/ 800 de inicial y 12 cuotas de S/ 380','12:02']]},
-  {id:11, n:'Alexander Curico',  tel:'+51 933 *** 890', c:'Pucallpa', m:'Pulsar NS 160', e:'visita', v:'Milagros Tuesta', esp:3, o:'Anuncio · NS 160',
+  {id:11, n:'Alexander Curico',  tel:'+51 933 *** 890', pv:'pu-sur', org:{t:'pauta'}, c:'Pucallpa', m:'Pulsar NS160', e:'visita', v:'Milagros Tuesta', esp:3, o:'Anuncio · NS 160',
    chat:[['cli','Voy mañana 10 am a verla','16:40'],['ven','¡Te espero Alexander! Pregunta por Milagros. Av. Centenario 1240','16:44','movil'],['sis','Visita agendada · mañana 10:00','16:44']]},
-  {id:12, n:'Deysi Fasabi',      tel:'+51 977 *** 104', c:'Iquitos',  m:'Discover 125',  e:'visita', v:'Rosa Panduro', esp:9, o:'Anuncio · Discover',
+  {id:12, n:'Deysi Fasabi',      tel:'+51 977 *** 104', pv:'iq-centro', org:{t:'accion',s:'Volanteo'}, c:'Iquitos',  m:'Discover 125',  e:'visita', v:'Rosa Panduro', esp:9, o:'Anuncio · Discover',
    chat:[['cli','Paso el viernes en la tarde','14:20'],['ven','Perfecta Deysi, te separo la roja hasta el viernes 6 pm','14:29','crm'],['sis','Visita agendada · viernes 18:00','14:29']]},
-  {id:13, n:'Percy Manihuari',   tel:'+51 951 *** 373', c:'Pucallpa', m:'Pulsar N160',   e:'inicial', v:'Jhon Vásquez', esp:2, o:'Anuncio · N160',
+  {id:13, n:'Percy Manihuari',   tel:'+51 951 *** 373', pv:'pu-centro', org:{t:'pauta'}, c:'Pucallpa', m:'Pulsar N160',   e:'inicial', v:'Jhon Vásquez', esp:2, o:'Anuncio · N160',
    chat:[['cli','Ya deposité los S/ 1.500','10:55'],['ven','¡Confirmado Percy! Ya está separada tu N160 negra. Trae DNI el jueves','11:02'],['sis','Inicial recibida · S/ 1.500','11:02']]},
-  {id:14, n:'Bertha Coral',      tel:'+51 969 *** 812', c:'Iquitos',  m:'Boxer CT 100',  e:'inicial', v:'Elmer Ríos', esp:4, o:'Anuncio · Boxer trabajo',
+  {id:14, n:'Bertha Coral',      tel:'+51 969 *** 812', pv:'iq-centro', org:{t:'tienda'}, c:'Iquitos',  m:'Boxer 150',  e:'inicial', v:'Elmer Ríos', esp:4, o:'Anuncio · Boxer trabajo',
    chat:[['cli','Voy a dar la inicial hoy','09:40'],['sis','Inicial recibida · S/ 700','13:15']]},
-  {id:15, n:'Iván Dávila',       tel:'+51 989 *** 557', c:'Pucallpa', m:'Pulsar NS 200', e:'vendido', v:'Milagros Tuesta', esp:0, o:'Anuncio · NS 200',
+  {id:15, n:'Iván Dávila',       tel:'+51 989 *** 557', pv:'pu-sur', org:{t:'pauta'}, c:'Pucallpa', m:'Pulsar NS200', e:'vendido', v:'Milagros Tuesta', esp:0, o:'Anuncio · NS 200',
    chat:[['ven','¡Felicidades Iván! Tu NS 200 está lista 🏁','17:10'],['sis','Moto entregada · S/ 10.990','17:12'],['cli','Gracias hermano, quedó bonita 🔥','17:30']]},
-  {id:16, n:'Jhoselyn Reátegui', tel:'+51 921 *** 049', c:'Pucallpa', m:'Discover 125',  e:'vendido', v:'Jhon Vásquez', esp:0, o:'Anuncio · Discover',
+  {id:16, n:'Jhoselyn Reátegui', tel:'+51 921 *** 049', pv:'pu-centro', org:{t:'pauta'}, c:'Pucallpa', m:'Discover 125',  e:'vendido', v:'Jhon Vásquez', esp:0, o:'Anuncio · Discover',
    chat:[['sis','Moto entregada · S/ 5.990','16:02'],['cli','Ya la estoy manejando, gracias 😄','18:44']]}
 ];
 
@@ -845,8 +987,8 @@ const MOTIVOS = [
 ];
 
 const PERFILES = [
-  {id:'admin',   nom:'Sandra Urbano',   rol:'Administración Crossland', corto:'Administración',  ciudad:null,       vend:null,
-   ve:'Ve las 2 tiendas, compara vendedores y configura las reglas.'},
+  {id:'admin',   nom:'Sandra Urbano',   rol:'Administración Selva', corto:'Administración',  ciudad:null,       vend:null,
+   ve:'Ve toda la Selva —tiendas y distribuidores—, compara y configura las reglas.'},
   {id:'jefe-iq', nom:'Lucía Ahuanari',  rol:'Jefa de tienda · Iquitos', corto:'Jefa · Iquitos',  ciudad:'Iquitos',  vend:null,
    ve:'Ve todos los clientes y vendedores de Iquitos. No ve los números de Pucallpa.'},
   {id:'jefe-pu', nom:'Édinson Ramírez', rol:'Jefe de tienda · Pucallpa', corto:'Jefe · Pucallpa', ciudad:'Pucallpa', vend:null,
@@ -897,7 +1039,7 @@ document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{
   ciudadFiltro = b.dataset.ciudad;
   document.querySelectorAll('.seg button').forEach(o=>o.setAttribute('aria-pressed', String(o===b)));
   pintarTodo();
-  toast(ciudadFiltro==='todas' ? 'Viendo las dos tiendas' : 'Viendo solo '+ciudadFiltro);
+  toast(ciudadFiltro==='todas' ? 'Viendo toda la Selva' : 'Viendo solo '+ciudadFiltro);
 });
 
 /* ---------- quién entró: administración o cada tienda ---------- */
@@ -1087,8 +1229,8 @@ function abrirFicha(id){
   $('#f-av').textContent = ini(l.n); $('#f-av').style.background = colorAv(l.n);
   $('#f-nombre').textContent = l.n; $('#f-tel').textContent = l.tel;
   $('#f-moto').textContent = l.m; $('#f-precio').textContent = soles(MOTOS[l.m]);
-  $('#f-ciudad').textContent = 'Bajaj ' + l.c; $('#f-vend').textContent = l.v;
-  $('#f-origen').textContent = l.o;
+  $('#f-ciudad').textContent = nomPunto(l.pv) || ('Bajaj ' + l.c); $('#f-vend').textContent = l.v;
+  $('#f-origen').textContent = l.org ? nomOrigen(l.org) : l.o;
   $('#f-espera').textContent = tiempo(l.esp);
   $('#f-espera').style.color = l.esp>=120 ? 'var(--rojo)' : l.esp>0 ? 'var(--ambar)' : 'var(--verde)';
   $('#f-estado').innerHTML = ETAPAS.map(e=>`<option value="${e.id}" ${e.id===l.e?'selected':''}>${e.nom}</option>`).join('');
@@ -1206,6 +1348,106 @@ function pintarMotivos(){
       <b>27 de cada 100 que no compraron se perdieron por demora, no por precio.</b> Ese es el pedazo que el Centro de Ventas ataca desde el primer día.</p>`;
 }
 
+
+/* ---------- de dónde llegan · registro manual · carga en lote ---------- */
+const nomPunto = id => (PUNTOS.find(p=>p.id===id)||{}).nom || '—';
+const nomOrigen = o => {
+  if(!o) return '—';
+  const base = (ORIGENES[o.t]||{}).nom || o.t;
+  return o.s ? base + ' · ' + o.s : base;
+};
+
+function pintarOrigen(){
+  const v = visibles();
+  const cuenta = {};
+  Object.keys(ORIGENES).forEach(k => cuenta[k] = v.filter(l => (l.org||{}).t === k).length);
+  const total = v.length || 1;
+
+  $('#tiles-origen').innerHTML = Object.entries(ORIGENES).map(([k,o])=>`
+    <div class="tile${k==='pauta'?'':' '}">
+      <div class="k">${o.nom}</div>
+      <div class="v">${cuenta[k]}</div>
+      <div class="n">${o.auto ? 'entra solo' : 'se registra a mano'}</div>
+    </div>`).join('');
+
+  const max = Math.max(1, ...Object.values(cuenta));
+  $('#canales').innerHTML = Object.entries(ORIGENES).map(([k,o])=>`
+    <div class="canal">
+      <span class="et">${o.nom}<small>${o.auto?'automático desde la pauta':'lo registra el equipo'}</small></span>
+      <span class="barra"><i class="${k==='pauta'?'':'a'}" style="width:${cuenta[k]/max*100}%"></i></span>
+      <span class="mono" style="font-size:12.5px;text-align:right">${Math.round(cuenta[k]/total*100)}%</span>
+    </div>`).join('');
+
+  const subs = {};
+  v.filter(l=>(l.org||{}).t==='accion' && l.org.s).forEach(l => subs[l.org.s] = (subs[l.org.s]||0)+1);
+  ORIGENES.accion.subs.forEach(s => { if(!(s in subs)) subs[s] = 0; });
+  const mx = Math.max(1, ...Object.values(subs));
+  $('#acciones-com').innerHTML = Object.entries(subs).sort((a,b)=>b[1]-a[1]).map(([s,n])=>`
+    <div class="canal" style="grid-template-columns:130px 1fr 30px">
+      <span class="et">${s}</span>
+      <span class="barra"><i class="a" style="width:${n/mx*100}%"></i></span>
+      <span class="mono" style="font-size:12px;text-align:right">${n}</span>
+    </div>`).join('') +
+    '<p class="nota" style="margin-top:12px">Así se sabe <b>cuál acción comercial trae clientes de verdad</b> y cuál solo gasta el sábado del equipo.</p>';
+}
+
+/* ---- panel de nuevo prospecto ---- */
+function abrirNuevo(){
+  $('#nv-moto').innerHTML = Object.keys(MOTOS).map(m=>`<option>${m}</option>`).join('');
+  $('#nv-pv').innerHTML = PUNTOS.map(p=>`<option value="${p.id}">${p.nom}${p.tipo==='distribuidor'?' (distribuidor)':''}</option>`).join('');
+  $('#nv-org').innerHTML = Object.entries(ORIGENES).filter(([k,o])=>!o.auto)
+    .map(([k,o])=>`<option value="${k}">${o.nom}</option>`).join('');
+  subOrigen();
+  $('#nv-nom').value=''; $('#nv-tel').value='';
+  $('#panel-nuevo').classList.add('on'); $('#velo2').classList.add('on');
+  setTimeout(()=>$('#nv-nom').focus(), 260);
+}
+function cerrarNuevo(){ $('#panel-nuevo').classList.remove('on'); $('#velo2').classList.remove('on'); }
+function subOrigen(){
+  const k = $('#nv-org').value, subs = (ORIGENES[k]||{}).subs || [];
+  $('#nv-sub-w').style.display = subs.length ? 'flex' : 'none';
+  $('#nv-sub').innerHTML = subs.map(s=>`<option>${s}</option>`).join('');
+}
+function guardarNuevo(){
+  const nom = $('#nv-nom').value.trim();
+  if(!nom){ $('#nv-nom').focus(); toast('Falta el nombre del cliente'); return; }
+  const k = $('#nv-org').value, subs = (ORIGENES[k]||{}).subs || [];
+  const pvId = $('#nv-pv').value, punto = PUNTOS.find(p=>p.id===pvId);
+  const tel = $('#nv-tel').value.trim() || '+51 9XX *** ***';
+  LEADS.unshift({
+    id: Date.now()%100000, n:nom, tel, pv:pvId, c:punto.ciudad,
+    org:{t:k, s: subs.length ? $('#nv-sub').value : undefined},
+    m:$('#nv-moto').value, e:'nuevo', v: perfil.vend || (VEND.find(x=>x.c===punto.ciudad)||VEND[0]).n,
+    esp:0, o: nomOrigen({t:k, s: subs.length ? $('#nv-sub').value : undefined}),
+    chat:[['sis','Prospecto registrado a mano por '+perfil.nom, ahora()]]
+  });
+  cerrarNuevo(); pintarTodo(); pintarOrigen();
+  toast(nom + ' quedó registrado y ya está en el embudo');
+}
+
+/* ---- carga en lote desde plantilla ---- */
+function simularCarga(){
+  const filas = [
+    {n:'Wilson Ríos',      m:'Boxer 150',    pv:'tarapoto', s:'Activación'},
+    {n:'Karina Flores',    m:'Pulsar NS160', pv:'tarapoto', s:'Test ride'},
+    {n:'Luis Pinedo',      m:'Dominar 250',  pv:'pu-sur',   s:'Test ride'},
+    {n:'Marleny Chávez',   m:'Boxer BM150',  pv:'norcentro',s:'Activación'},
+    {n:'Julio Arévalo',    m:'Pulsar 220F',  pv:'pu-centro',s:'Volanteo'}
+  ];
+  filas.forEach((f,i)=>{
+    const punto = PUNTOS.find(p=>p.id===f.pv);
+    LEADS.unshift({
+      id: 90000+i, n:f.n, tel:'+51 9XX *** ***', pv:f.pv, c:punto.ciudad,
+      org:{t:'accion', s:f.s}, m:f.m, e:'nuevo',
+      v:(VEND.find(x=>x.c===punto.ciudad)||VEND[0]).n, esp:0, o:'Acción comercial · '+f.s,
+      chat:[['sis','Cargado desde plantilla · '+f.s, ahora()]]
+    });
+  });
+  $('#res-carga').innerHTML = '<b style="color:var(--good)">5 prospectos cargados</b> · 0 repetidos · 0 filas con error. Ya están en el embudo y repartidos entre los vendedores.';
+  pintarTodo(); pintarOrigen();
+  toast('5 prospectos entraron de una sola vez');
+}
+
 /* ---------- reporte del mes: la central ve todo, la tienda ve lo suyo ---------- */
 function pintarReporte(){
   const admin = perfil.ciudad === null;
@@ -1264,13 +1506,13 @@ function pintarReporte(){
       La meta de Crossland es 3 de cada 100: eso son <b>${d.perdidas} motos más al mes</b> con la misma publicidad.</p>`;
 }
 
-function pintarTodo(){ pintarTablero(); pintarTablero2(); pintarVendedores(); }
+function pintarTodo(){ pintarTablero(); pintarTablero2(); pintarVendedores(); if(document.getElementById('tiles-origen')) pintarOrigen(); }
 
 pintarReglas(); pintarMotivos(); aplicarPerfil('admin', true);
 
 /* un lead entra solo, para mostrar que llega desde la pauta */
 setTimeout(()=>{
-  const nuevo = {id:99, n:'Rider Ushiñahua', tel:'+51 907 *** 731', c:'Pucallpa', m:'Pulsar NS 160',
+  const nuevo = {id:99, n:'Rider Ushiñahua', tel:'+51 907 *** 731', pv:'pu-sur', org:{t:'pauta'}, c:'Pucallpa', m:'Pulsar NS160',
     e:'nuevo', v:'Milagros Tuesta', esp:1, o:'Anuncio · NS 160 (recién ahora)',
     chat:[['cli','Buenas, acabo de ver el anuncio de la NS 160 🏍️', ahora()]]};
   LEADS.unshift(nuevo);
